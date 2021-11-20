@@ -1,0 +1,19 @@
+server:
+  port: 18080
+
+spring:
+  datasource:
+    username: gaopengtao
+    password: gaopengtao
+    url: jdbc:oracle:thin:@47.100.82.183:1521:ORCL
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+
+mybatis:
+  mapper-locations: classpath:com/org/management/mapper/*.xml
+
+logging:
+  # 设置logback.xml位置
+  #  config: classpath:log/logback.xml
+  # 设置log4j.properties位置
+  config: classpath:log4j.properties
+
