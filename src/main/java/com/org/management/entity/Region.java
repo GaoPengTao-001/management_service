@@ -13,7 +13,7 @@ public class Region {
         List<Map<String,String>> regionList = new ArrayList<>();
         Map<String,String> map = new HashMap<>();
         map.put("regionId","");
-        map.put("regionNm","所有");
+        map.put("regionNm","全国");
         regionList.add(map);
         this.setRegionList(regionList);
 
