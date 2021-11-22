@@ -1,6 +1,8 @@
 package com.org.management.entity;
 
 public class OutputValue {
+
+    private String id;
     private String valueDate;
     private String BusId;
     private String totail;
@@ -33,6 +35,14 @@ public class OutputValue {
     private String rework;
     private String reworkLast;
     private String reworkCurrent;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getValueDate() {
         return valueDate;
