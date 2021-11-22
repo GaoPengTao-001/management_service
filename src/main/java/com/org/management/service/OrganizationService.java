@@ -1,7 +1,9 @@
 package com.org.management.service;
 
+import com.org.management.entity.OutputValue;
 import com.org.management.entity.Region;
 import com.org.management.entity.RegionQuery;
+import com.org.management.entity.ValueQuery;
 import com.org.management.mapper.OrganizationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,4 +48,11 @@ public class OrganizationService {
         return null;
     }
 
+    public OutputValue getOutputValue(ValueQuery query){
+        // 月
+        if("1".equals(query.getTimeDimension())){
+            query.setDateValue(query.getDateValue().replace("_",""));
+        }
+        return organizationMapper.selectOutputValue(query);
+    }
 }

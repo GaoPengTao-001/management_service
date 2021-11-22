@@ -1,46 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.org.management.mapper.OrganizationMapper">
-    <resultMap id="RegionResultMap" type="com.org.management.entity.Region">
-        <id column="id" property="id" javaType="java.lang.String"></id>
-        <collection property="regionList" ofType="java.util.Map">
-            <result column="region_id" property="regionId" javaType="java.lang.String"></result>
-            <result column="region_nm" property="regionNm" javaType="java.lang.String"></result>
-        </collection>
-        <collection property="fmcList" ofType="java.util.Map">
-            <result column="fmc_id" property="fmcId" javaType="java.lang.String"></result>
-            <result column="fmc_nm" property="fmcNm" javaType="java.lang.String"></result>
-        </collection>
-        <collection property="provList" ofType="java.util.Map">
-            <result column="prov_id" property="provId" javaType="java.lang.String"></result>
-            <result column="prov_com_nm" property="provComNm" javaType="java.lang.String"></result>
-        </collection>
-        <collection property="cityList" ofType="java.util.Map">
-            <result column="city_id" property="cityId" javaType="java.lang.String"></result>
-            <result column="city_com_nm" property="cityComNm" javaType="java.lang.String"></result>
-        </collection>
-        <collection property="ascList" ofType="java.util.Map">
-            <result column="ASC_CD" property="ascCd" javaType="java.lang.String"></result>
-            <result column="ASC_NM" property="fmcNm" javaType="java.lang.String"></result>
-        </collection>
-    </resultMap>
-
-    <select id="selectRegion" resultMap="RegionResultMap">
-        SELECT
-          distinct ASC_CD,
-          ASC_NM,
-          '1' id
-        FROM
-            T_REGION
-        <where>
-            <if test="'' != query.regionId and null != query.regionId">
-                REGION_ID = #{query.regionId}
-            </if>
-            <if test="'' != query.fmcId and null != query.fmcId">
-                and FMC_ID = #{query.fmcId}
-            </if>
-        </where>
-    </select>
     <select id="regionList" resultType="java.util.Map">
         SELECT
             distinct region_id "regionId", region_nm "regionNm"
@@ -103,5 +63,44 @@
                 and CITY_ID = #{query.cityId}
             </if>
         </where>
+    </select>
+    <select id="selectOutputValue" resultType="com.org.management.entity.OutputValue">
+        SELECT
+            id	id,
+            value_date	valueDate,
+            busid	busid,
+            totail	totail,
+            totail_last	totailLast,
+            totail_current	totailCurrent,
+            claim	claim,
+            claim_last	claimLast,
+            claim_current	claimCurrent,
+            guarantee	guarantee,
+            guarantee_last	guaranteeLast,
+            guarantee_current	guaranteeCurrent,
+            no_guarantee	noGuarantee,
+            no_guarantee_last	noGuaranteeLast,
+            no_guarantee_current	noGuaranteeCurrent,
+            no_claim	noClaim,
+            no_claim_last	noClaimLast,
+            no_claim_current	noClaimCurrent,
+            maintain	maintain,
+            maintain_last	maintainLast,
+            maintain_current	maintainCurrent,
+            repair	repair,
+            repair_last	repairLast,
+            repair_current	repairCurrent,
+            accident	accident,
+            accident_last	accidentLast,
+            accident_current	accidentCurrent,
+            sale	sale,
+            sale_last	saleLast,
+            sale_current	saleCurrent,
+            rework	rework,
+            rework_last	reworkLast,
+            rework_current	reworkCurrent
+        FROM
+            T_OUTPUT_VALUE
+        where busid = #{busId} and value_date = #{dateValue}
     </select>
 </mapper>
