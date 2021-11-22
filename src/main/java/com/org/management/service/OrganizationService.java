@@ -52,7 +52,8 @@ public class OrganizationService {
         try {
             // 月
             if ("1".equals(query.getTimeDimension())) {
-                query.setDateValue(query.getDateValue().replace("_", ""));
+                String dateValue = query.getDateValue();
+                query.setDateValue(dateValue.replaceAll("-", ""));
             }
             return organizationMapper.selectOutputValue(query);
         } catch (Exception e) {
