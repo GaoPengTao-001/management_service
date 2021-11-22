@@ -29,7 +29,7 @@ public class Organization {
     }
 
     @PostMapping(value = "/getOutputValue")
-    public OutputValue getOutputValue(@RequestParam ValueQuery query) {
+    public OutputValue getOutputValue(@RequestBody ValueQuery query) {
         return organizationService.getOutputValue(query);
     }
 }

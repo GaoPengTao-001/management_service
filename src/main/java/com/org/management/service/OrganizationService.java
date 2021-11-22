@@ -48,11 +48,16 @@ public class OrganizationService {
         return null;
     }
 
-    public OutputValue getOutputValue(ValueQuery query){
-        // 月
-        if("1".equals(query.getTimeDimension())){
-            query.setDateValue(query.getDateValue().replace("_",""));
+    public OutputValue getOutputValue(ValueQuery query) {
+        try {
+            // 月
+            if ("1".equals(query.getTimeDimension())) {
+                query.setDateValue(query.getDateValue().replace("_", ""));
+            }
+            return organizationMapper.selectOutputValue(query);
+        } catch (Exception e) {
+            log.error("OrganizationService.getOutputValue异常", e);
+            return null;
         }
-        return organizationMapper.selectOutputValue(query);
     }
 }
