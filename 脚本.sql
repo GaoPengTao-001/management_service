@@ -74,3 +74,110 @@ comment on column t_province.asc_cd is '组织code'
 comment on column t_province.asc_nm is '组织名称'
 /
 
+
+
+
+CREATE TABLE t_output_value (
+  id varchar2(64) NOT NULL CONSTRAINT t_output_value_pk PRIMARY KEY,
+  value_date varchar2(128) DEFAULT NULL,
+  busId varchar2(128) DEFAULT NULL,
+  totail varchar2(128) DEFAULT NULL,
+  totail_last varchar2(128) DEFAULT NULL,
+  totail_current varchar2(128) DEFAULT NULL,
+  claim varchar2(128) DEFAULT NULL,
+  claim_last varchar2(128) DEFAULT NULL,
+  claim_current varchar2(128) DEFAULT NULL,
+  guarantee varchar2(128) DEFAULT NULL,
+  guarantee_last varchar2(128) DEFAULT NULL,
+  guarantee_current varchar2(128) DEFAULT NULL,
+  no_guarantee varchar2(128) DEFAULT NULL,
+  no_guarantee_last varchar2(128) DEFAULT NULL,
+  no_guarantee_current varchar2(128) DEFAULT NULL,
+  no_claim varchar2(128) DEFAULT NULL,
+  no_claim_last varchar2(128) DEFAULT NULL,
+  no_claim_current varchar2(128) DEFAULT NULL,
+  maintain varchar2(128) DEFAULT NULL,
+  maintain_last varchar2(128) DEFAULT NULL,
+  maintain_current varchar2(128) DEFAULT NULL,
+  repair varchar2(128) DEFAULT NULL,
+  repair_last varchar2(128) DEFAULT NULL,
+  repair_current varchar2(128) DEFAULT NULL,
+  accident varchar2(128) DEFAULT NULL,
+  accident_last varchar2(128) DEFAULT NULL,
+  accident_current varchar2(128) DEFAULT NULL,
+  sale varchar2(128) DEFAULT NULL,
+  sale_last varchar2(128) DEFAULT NULL,
+  sale_current varchar2(128) DEFAULT NULL,
+  rework varchar2(128) DEFAULT NULL,
+  rework_last varchar2(128) DEFAULT NULL,
+  rework_current varchar2(128) DEFAULT NULL
+)
+/
+comment on table t_output_value is '产值'
+/
+comment on column t_output_value.id is 'id主键'
+/
+comment on column t_output_value.value_date is '时间'
+/
+comment on column t_output_value.busId is '大区ID'
+/
+comment on column t_output_value.totail is '售后总产值'
+/
+comment on column t_output_value.totail_last is '售后总产值_上期值'
+/
+comment on column t_output_value.totail_current is '售后总产值_同期值'
+/
+comment on column t_output_value.claim is '索赔总产值'
+/
+comment on column t_output_value.claim_last is '索赔总产值_上期值'
+/
+comment on column t_output_value.claim_current is '索赔总产值_同期值'
+/
+comment on column t_output_value.guarantee is '首保总产值'
+/
+comment on column t_output_value.guarantee_last is '首保总产值_上期值'
+/
+comment on column t_output_value.guarantee_current is '首保总产值_同期值'
+/
+comment on column t_output_value.no_guarantee is '索赔不含首保总产值'
+/
+comment on column t_output_value.no_guarantee_last is '索赔不含首保_上期'
+/
+comment on column t_output_value.no_guarantee_current is '索赔不含首保_同期'
+/
+comment on column t_output_value.no_claim is '非索赔总产值'
+/
+comment on column t_output_value.no_claim_last is '非索赔总产值_上期值'
+/
+comment on column t_output_value.no_claim_current is '非索赔总产值_同期值'
+/
+comment on column t_output_value.maintain is '保养总产值'
+/
+comment on column t_output_value.maintain_last is '保养总产值_上期值'
+/
+comment on column t_output_value.maintain_current is '保养总产值_同期值'
+/
+comment on column t_output_value.repair is '维修总产值'
+/
+comment on column t_output_value.repair_last is '维修总产值_上期值'
+/
+comment on column t_output_value.repair_current is '维修总产值_同期值'
+/
+comment on column t_output_value.accident is '事故总产值'
+/
+comment on column t_output_value.accident_last is '事故总产值_上期值'
+/
+comment on column t_output_value.accident_current is '事故总产值_同期值'
+/
+comment on column t_output_value.sale is '销售总产值'
+/
+comment on column t_output_value.sale_last is '销售总产值_上期值'
+/
+comment on column t_output_value.sale_current is '销售总产值_同期值'
+/
+comment on column t_output_value.rework is '返工总产值'
+/
+comment on column t_output_value.rework_last is '返工总产值_上期值'
+/
+comment on column t_output_value.rework_current is '返工总产值_同期值'
+/
