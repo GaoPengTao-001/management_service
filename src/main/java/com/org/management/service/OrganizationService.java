@@ -8,9 +8,11 @@ import com.org.management.mapper.OrganizationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class OrganizationService {
@@ -58,6 +60,35 @@ public class OrganizationService {
             return organizationMapper.selectOutputValue(query);
         } catch (Exception e) {
             log.error("OrganizationService.getOutputValue异常", e);
+            return null;
+        }
+    }
+
+    public List<OutputValue> getOutputValueDetail(ValueQuery query) {
+        try {
+            // 月
+            if ("1".equals(query.getTimeDimension())) {
+                String dateValue = query.getDateValue();
+                query.setDateValue(dateValue.replaceAll("-", ""));
+            }
+            List<String> ids = null;
+            // 小区下查询经销商详情
+            if (CollectionUtils.isEmpty(ids) && StringUtils.hasLength(query.getFmcId())) {
+                ids = organizationMapper.selectAscCdByFmcId(query.getFmcId());
+
+            }
+            // 大区下查询小区详情
+            if (CollectionUtils.isEmpty(ids) && StringUtils.hasLength(query.getRegionId())) {
+                ids = organizationMapper.selectFmcIdByRegionId(query.getRegionId());
+            }
+            // 全国下查询大区详情
+            if (CollectionUtils.isEmpty(ids)) {
+                ids = organizationMapper.selectRegionId();
+            }
+            // 通过id查询详情列表
+            return organizationMapper.selectOutputValueDetail(ids, query.getDateValue());
+        } catch (Exception e) {
+            log.error("OrganizationService.getOutputValueDetail异常", e);
             return null;
         }
     }
