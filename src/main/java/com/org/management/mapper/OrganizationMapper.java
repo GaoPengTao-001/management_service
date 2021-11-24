@@ -1,6 +1,7 @@
 package com.org.management.mapper;
 
 
+import com.org.management.entity.OrgInfo;
 import com.org.management.entity.OutputValue;
 import com.org.management.entity.Region;
 import com.org.management.entity.RegionQuery;
@@ -28,14 +29,14 @@ public interface OrganizationMapper {
 
     OutputValue selectOutputValue(@Param("query") ValueQuery query);
 
-    List<OutputValue> selectOutputValueDetail(@Param("ids") List<String> ids, @Param("dateValue") String dateValue);
+    List<OutputValue> selectOutputValueDetail(@Param("ids") List<OrgInfo> ids, @Param("dateValue") String dateValue);
 
     // 查询大区的id
-    List<String> selectRegionId();
+    List<OrgInfo> selectRegionId();
 
     // 通过大区id查询小区的id
-    List<String> selectFmcIdByRegionId(@Param("id") String id);
+    List<OrgInfo> selectFmcIdByRegionId(@Param("id") String id);
 
     // 通过小区的id查询经销商的id
-    List<String> selectAscCdByFmcId(@Param("id") String id);
+    List<OrgInfo> selectAscCdByFmcId(@Param("id") String id);
 }

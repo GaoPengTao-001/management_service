@@ -3,6 +3,7 @@ package com.org.management.entity;
 public class OutputValue {
 
     private String id;
+    private String OrgName;
     private String valueDate;
     private String BusId;
     private String totail;
@@ -294,6 +295,14 @@ public class OutputValue {
 
     public String getReworkCurrent() {
         return reworkCurrent;
+    }
+
+    public String getOrgName() {
+        return OrgName;
+    }
+
+    public void setOrgName(String orgName) {
+        OrgName = orgName;
     }
 
     public void setReworkCurrent(String reworkCurrent) {

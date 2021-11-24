@@ -1,5 +1,6 @@
 package com.org.management.service;
 
+import com.org.management.entity.OrgInfo;
 import com.org.management.entity.OutputValue;
 import com.org.management.entity.Region;
 import com.org.management.entity.RegionQuery;
@@ -12,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -71,22 +73,31 @@ public class OrganizationService {
                 String dateValue = query.getDateValue();
                 query.setDateValue(dateValue.replaceAll("-", ""));
             }
-            List<String> ids = null;
+            List<OrgInfo> ids = new ArrayList<>();
             // 小区下查询经销商详情
             if (CollectionUtils.isEmpty(ids) && StringUtils.hasLength(query.getFmcId())) {
-                ids = organizationMapper.selectAscCdByFmcId(query.getFmcId());
+                ids.addAll(organizationMapper.selectAscCdByFmcId(query.getFmcId()));
 
             }
             // 大区下查询小区详情
             if (CollectionUtils.isEmpty(ids) && StringUtils.hasLength(query.getRegionId())) {
-                ids = organizationMapper.selectFmcIdByRegionId(query.getRegionId());
+                ids.addAll(organizationMapper.selectFmcIdByRegionId(query.getRegionId()));
             }
             // 全国下查询大区详情
             if (CollectionUtils.isEmpty(ids)) {
-                ids = organizationMapper.selectRegionId();
+                ids.addAll(organizationMapper.selectRegionId());
             }
             // 通过id查询详情列表
-            return organizationMapper.selectOutputValueDetail(ids, query.getDateValue());
+            List<OutputValue> outputValues = organizationMapper.selectOutputValueDetail(ids, query.getDateValue());
+            // 设置名称
+            if(!CollectionUtils.isEmpty(outputValues)){
+                outputValues.forEach(item -> ids.forEach(id -> {
+                    if(id.getId().equals(item.getBusId())){
+                        item.setOrgName(id.getName());
+                    }
+                }));
+            }
+            return outputValues;
         } catch (Exception e) {
             log.error("OrganizationService.getOutputValueDetail异常", e);
             return null;

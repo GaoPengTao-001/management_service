@@ -103,50 +103,35 @@
             T_OUTPUT_VALUE
         where busid = #{query.busId} and value_date = #{query.dateValue}
     </select>
-    <select id="selectRegionId" resultType="string">
-        SELECT
-          t.REGION_ID
-        FROM
-          (
-            SELECT DISTINCT
-              REGION_ID,
-              REGION_NM
+    <select id="selectRegionId" resultType="com.org.management.entity.OrgInfo">
+        SELECT DISTINCT
+              REGION_ID id,
+              REGION_NM name
             FROM
               T_REGION
             ORDER BY
               REGION_NM ASC
-          ) t
     </select>
-    <select id="selectFmcIdByRegionId" resultType="string">
-        SELECT
-            t.FMC_ID
-        FROM
-            (
-                SELECT DISTINCT
-                    FMC_ID,
-                    FMC_NM
+    <select id="selectFmcIdByRegionId" resultType="com.org.management.entity.OrgInfo">
+        SELECT DISTINCT
+                    FMC_ID id,
+                    FMC_NM name
                 FROM
                     T_REGION
                 WHERE
                     REGION_ID = #{id}
                 ORDER BY
                     FMC_NM ASC
-            ) t
     </select>
-    <select id="selectAscCdByFmcId" resultType="string">
-        SELECT
-          t.ASC_CD
-        FROM
-          (
-            SELECT DISTINCT
-              ASC_CD,
-              ASC_NM
+    <select id="selectAscCdByFmcId" resultType="com.org.management.entity.OrgInfo">
+        SELECT DISTINCT
+              ASC_CD id,
+              ASC_NM name
             FROM
               T_REGION
             where FMC_ID = #{id}
             ORDER BY
               ASC_NM ASC
-          ) t
     </select>
     <select id="selectOutputValueDetail" resultType="com.org.management.entity.OutputValue">
         SELECT
@@ -188,7 +173,7 @@
         where busid in
         <foreach item="item" index="index" collection="ids"
                  open="(" separator="," close=")">
-            #{item}
+            #{item.id}
         </foreach>
        and value_date = #{dateValue}
     </select>
