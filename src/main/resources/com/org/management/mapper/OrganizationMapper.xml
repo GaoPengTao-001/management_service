@@ -133,6 +133,16 @@
             ORDER BY
               ASC_NM ASC
     </select>
+    <select id="selectAscCdDetailByAsc" resultType="com.org.management.entity.OrgInfo">
+        SELECT DISTINCT
+              ASC_CD id,
+              ASC_NM name
+            FROM
+              T_REGION
+            where ASC_CD = #{id}
+            ORDER BY
+              ASC_NM ASC
+    </select>
     <select id="selectOutputValueDetail" resultType="com.org.management.entity.OutputValue">
         SELECT
             id AS id,

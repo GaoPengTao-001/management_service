@@ -39,4 +39,7 @@ public interface OrganizationMapper {
 
     // 通过小区的id查询经销商的id
     List<OrgInfo> selectAscCdByFmcId(@Param("id") String id);
+
+    // 根据经销商id查询经销商详情
+    List<OrgInfo> selectAscCdDetailByAsc(@Param("id") String id);
 }

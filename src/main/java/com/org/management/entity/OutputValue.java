@@ -35,7 +35,8 @@ public class OutputValue {
     private String saleCurrent;
     private String rework;
     private String reworkLast;
-    private String reworkCurrent;
+    private String reworkCurrent ;
+
 
     public String getId() {
         return id;

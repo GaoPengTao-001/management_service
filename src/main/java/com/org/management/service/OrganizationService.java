@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -74,10 +75,13 @@ public class OrganizationService {
                 query.setDateValue(dateValue.replaceAll("-", ""));
             }
             List<OrgInfo> ids = new ArrayList<>();
+            // 查询经销商详情
+            if (CollectionUtils.isEmpty(ids) && StringUtils.hasLength(query.getAscCd())) {
+                ids.addAll(organizationMapper.selectAscCdDetailByAsc(query.getAscCd()));
+            }
             // 小区下查询经销商详情
             if (CollectionUtils.isEmpty(ids) && StringUtils.hasLength(query.getFmcId())) {
                 ids.addAll(organizationMapper.selectAscCdByFmcId(query.getFmcId()));
-
             }
             // 大区下查询小区详情
             if (CollectionUtils.isEmpty(ids) && StringUtils.hasLength(query.getRegionId())) {
@@ -90,9 +94,9 @@ public class OrganizationService {
             // 通过id查询详情列表
             List<OutputValue> outputValues = organizationMapper.selectOutputValueDetail(ids, query.getDateValue());
             // 设置名称
-            if(!CollectionUtils.isEmpty(outputValues)){
+            if (!CollectionUtils.isEmpty(outputValues)) {
                 outputValues.forEach(item -> ids.forEach(id -> {
-                    if(id.getId().equals(item.getBusId())){
+                    if (id.getId().equals(item.getBusId())) {
                         item.setOrgName(id.getName());
                     }
                 }));
