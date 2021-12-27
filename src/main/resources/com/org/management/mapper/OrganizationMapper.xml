@@ -1,69 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.org.management.mapper.OrganizationMapper">
+    <!--大区列表-->
     <select id="regionList" resultType="java.util.Map">
-        SELECT
-            distinct region_id "regionId", region_nm "regionNm"
+      SELECT DISTINCT
+            A .region_id "region_id",
+            A .region_nm "region_nm"
         FROM
-          T_REGION
+            td_dds_fmc A
+        ORDER BY
+            A .region_nm
     </select>
 
+    <!--小区列表-->
     <select id="fmcList" resultType="java.util.Map">
         SELECT
-            distinct fmc_id "fmcId", fmc_nm "fmcNm"
+        A .region_id "region_id",
+        A .region_nm "region_nm",
+        A .fmc_id "fmc_id",
+        A .fmc_nm "fmc_nm"
         FROM
-          T_REGION
-        <where>
-            <if test="'' != query.regionId and null != query.regionId">
-                REGION_ID = #{query.regionId}
-            </if>
-        </where>
+        td_dds_fmc A
+        <if test="'' != query.regionId and null != query.regionId">
+            AND A.region_id =#{ query.regionId }
+        </if>
+        ORDER BY
+        A .region_nm,
+        A .fmc_nm
     </select>
-    <select id="ascListByRegion" resultType="java.util.Map">
-        SELECT
-        distinct ASC_CD "ascCd", ASC_NM "ascNm"
+
+    <!--集团列表，和小区互斥-->
+    <select id="groupList" resultType="java.util.Map">
+        SELECT DISTINCT
+          t.region_id,
+          'GROUP:' || t.asc_grp_id asc_grp_id,
+          t.asc_grp_nm
         FROM
-        T_REGION
-        <where>
-            <if test="'' != query.regionId and null != query.regionId">
-                REGION_ID = #{query.regionId}
-            </if>
-            <if test="'' != query.fmcId and null != query.fmcId">
-                and FMC_ID = #{query.fmcId}
-            </if>
-        </where>
+          td_dds_asc t
+        <if test="'' != query.regionId and null != query.regionId">
+            AND t.region_id =#{ query.regionId }
+        </if>
+        ORDER BY
+          t.region_id,
+          asc_grp_id
     </select>
+
+    <!--省份列表-->
     <select id="provList" resultType="java.util.Map">
-        SELECT
-            distinct prov_id "provId", prov_com_nm "provComNm"
+        SELECT distinct
+          a.prov_id,
+          decode(
+              a.prov_cn_nm,
+              NULL,
+              '其它',
+              a.prov_cn_nm
+            ) prov_cn_nm
         FROM
-          T_PROVINCE
+          td_dds_city a
+        ORDER BY
+          a.prov_id
     </select>
+
+    <!--城市列表-->
     <select id="cityList" resultType="java.util.Map">
         SELECT
-            distinct CITY_ID "cityId", CITY_COM_NM "cityComNm"
+          a.city_id,
+          a.city_cn_nm
         FROM
-          T_PROVINCE
-      <where>
-          <if test="'' != query.provId and null != query.provId">
-              prov_id = #{query.provId}
-          </if>
-      </where>
+          td_dds_city a
+        <if test="'' != query.provId and null != query.provId">
+            AND a.prov_id =#{ query.provId }
+        </if>
+        ORDER BY
+          a.city_id
     </select>
-    <select id="ascListByProvince" resultType="java.util.Map">
-        SELECT
-        distinct ASC_CD "ascCd", ASC_NM "ascNm"
-        FROM
-        T_PROVINCE
-        <where>
-            <if test="'' != query.provId and null != query.provId">
-                prov_id = #{query.provId}
-            </if>
-            <if test="'' != query.cityId and null != query.cityId">
-                and CITY_ID = #{query.cityId}
-            </if>
-        </where>
+
+    <!--经销商列表-->
+    <select id="ascList" resultType="java.util.Map">
+        <![CDATA[
+            SELECT
+                G .asc_id
+            VALUE
+                ,
+                G .asc_cd || '_' || G .asc_nm label
+            FROM
+                TD_DDS_ASC G
+            WHERE
+                1 = 1
+            AND G .asc_st <> 3
+       ]]>
+        <if test="'' != query.regionId and null != query.regionId">
+            AND G .region_id =#{ query.regionId }
+        </if>
+        <if test="'' != query.fmcId and null != query.fmcId">
+            AND G .FMC_ID =#{ query.fmcId }
+        </if>
+        <if test="'' != query.ascGrpId and null != query.ascGrpId">
+            AND G .asc_grp_id =#{ query.ascGrpId }
+        </if>
+        <if test="'' != query.provId and null != query.provId">
+            AND G .prov_id =#{ query.provId }
+        </if>
+        <if test="'' != query.cityId and null != query.cityId">
+            AND G .city_id =#{ query.cityId }
+        </if>
+        ORDER BY
+        G .asc_cd
     </select>
+
     <select id="selectOutputValue" resultType="com.org.management.entity.OutputValue">
         SELECT
             id AS id,
@@ -145,46 +189,46 @@
     </select>
     <select id="selectOutputValueDetail" resultType="com.org.management.entity.OutputValue">
         SELECT
-            id AS id,
-            value_date AS valueDate,
-            busid AS busid,
-            totail AS totail,
-            totail_last AS totailLast,
-            totail_current AS totailCurrent,
-            claim AS claim,
-            claim_last AS claimLast,
-            claim_current AS claimCurrent,
-            guarantee AS guarantee,
-            guarantee_last AS guaranteeLast,
-            guarantee_current AS guaranteeCurrent,
-            no_guarantee AS noGuarantee,
-            no_guarantee_last AS noGuaranteeLast,
-            no_guarantee_current AS noGuaranteeCurrent,
-            no_claim AS noClaim,
-            no_claim_last AS noClaimLast,
-            no_claim_current AS noClaimCurrent,
-            maintain AS maintain,
-            maintain_last AS maintainLast,
-            maintain_current AS maintainCurrent,
-            REPAIR AS REPAIR,
-            repair_last AS repairLast,
-            repair_current AS repairCurrent,
-            accident AS accident,
-            accident_last AS accidentLast,
-            accident_current AS accidentCurrent,
-            sale AS sale,
-            sale_last AS saleLast,
-            sale_current AS saleCurrent,
-            rework AS rework,
-            rework_last AS reworkLast,
-            rework_current AS reworkCurrent
+        id AS id,
+        value_date AS valueDate,
+        busid AS busid,
+        totail AS totail,
+        totail_last AS totailLast,
+        totail_current AS totailCurrent,
+        claim AS claim,
+        claim_last AS claimLast,
+        claim_current AS claimCurrent,
+        guarantee AS guarantee,
+        guarantee_last AS guaranteeLast,
+        guarantee_current AS guaranteeCurrent,
+        no_guarantee AS noGuarantee,
+        no_guarantee_last AS noGuaranteeLast,
+        no_guarantee_current AS noGuaranteeCurrent,
+        no_claim AS noClaim,
+        no_claim_last AS noClaimLast,
+        no_claim_current AS noClaimCurrent,
+        maintain AS maintain,
+        maintain_last AS maintainLast,
+        maintain_current AS maintainCurrent,
+        REPAIR AS REPAIR,
+        repair_last AS repairLast,
+        repair_current AS repairCurrent,
+        accident AS accident,
+        accident_last AS accidentLast,
+        accident_current AS accidentCurrent,
+        sale AS sale,
+        sale_last AS saleLast,
+        sale_current AS saleCurrent,
+        rework AS rework,
+        rework_last AS reworkLast,
+        rework_current AS reworkCurrent
         FROM
-            T_OUTPUT_VALUE
+        T_OUTPUT_VALUE
         where busid in
         <foreach item="item" index="index" collection="ids"
                  open="(" separator="," close=")">
             #{item.id}
         </foreach>
-       and value_date = #{dateValue}
+        and value_date = #{dateValue}
     </select>
 </mapper>

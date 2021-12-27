@@ -6,12 +6,13 @@ public class RegionQuery {
 
     private String fmcId;
 
+    private String ascGrpId;
+
     private String provId;
 
     private String cityId;
 
     private String ascCd;
-
 
     public String getRegionId() {
         return regionId;
@@ -51,5 +52,13 @@ public class RegionQuery {
 
     public void setCityId(String cityId) {
         this.cityId = cityId;
+    }
+
+    public String getAscGrpId() {
+        return ascGrpId;
+    }
+
+    public void setAscGrpId(String ascGrpId) {
+        this.ascGrpId = ascGrpId;
     }
 }

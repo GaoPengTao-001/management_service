@@ -14,18 +14,53 @@ import java.util.Map;
 
 @Mapper
 public interface OrganizationMapper {
-
+    /**
+     * 大区
+     *
+     * @param query
+     * @return
+     */
     List<Map<String, String>> regionList(@Param("query") RegionQuery query);
 
+    /**
+     * 小区
+     *
+     * @param query
+     * @return
+     */
     List<Map<String, String>> fmcList(@Param("query") RegionQuery query);
 
+    /**
+     * 集团
+     *
+     * @param query
+     * @return
+     */
+    List<Map<String, String>> groupList(@Param("query") RegionQuery query);
+
+    /**
+     * 省份
+     *
+     * @param query
+     * @return
+     */
     List<Map<String, String>> provList(@Param("query") RegionQuery query);
 
+    /**
+     * 城市
+     *
+     * @param query
+     * @return
+     */
     List<Map<String, String>> cityList(@Param("query") RegionQuery query);
 
-    List<Map<String, String>> ascListByRegion(@Param("query") RegionQuery query);
-
-    List<Map<String, String>> ascListByProvince(@Param("query") RegionQuery query);
+    /**
+     * 经销商
+     *
+     * @param query
+     * @return
+     */
+    List<Map<String, String>> ascList(@Param("query") RegionQuery query);
 
     OutputValue selectOutputValue(@Param("query") ValueQuery query);
 

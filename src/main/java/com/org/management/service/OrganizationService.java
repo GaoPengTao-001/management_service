@@ -27,24 +27,39 @@ public class OrganizationService {
      */
     private static final Logger log = LoggerFactory.getLogger(OrganizationService.class);
 
+    /**
+     * 查询过滤条件
+     *
+     * @param query
+     * @return
+     */
     public Region getRegion(RegionQuery query) {
         try {
             Region region = new Region();
             if ((!StringUtils.hasLength(query.getRegionId()) && !StringUtils.hasLength(query.getFmcId())) &&
                     !StringUtils.hasLength(query.getProvId()) && !StringUtils.hasLength(query.getCityId())) {
+                // 如果搜索条件为空，查询所有内容
                 region.addRegionList(organizationMapper.regionList(query));
                 region.addFmcList(organizationMapper.fmcList(query));
+                region.addGroupList(organizationMapper.groupList(query));
                 region.addProvList(organizationMapper.provList(query));
                 region.addCityList(organizationMapper.cityList(query));
-                region.addAscList(organizationMapper.ascListByRegion(query));
-            } else if ((StringUtils.hasLength(query.getRegionId()) || StringUtils.hasLength(query.getFmcId()))) {
+                region.addAscList(organizationMapper.ascList(query));
+            } else if (StringUtils.hasLength(query.getFmcId())) {
+                // 如果小区id不为空，查询大区小区
                 region.addRegionList(organizationMapper.regionList(query));
                 region.addFmcList(organizationMapper.fmcList(query));
-                region.addAscList(organizationMapper.ascListByRegion(query));
+                region.addAscList(organizationMapper.ascList(query));
+            } else if ((StringUtils.hasLength(query.getAscGrpId()))) {
+                // 如果集团id不为空，查询大区，集团
+                region.addRegionList(organizationMapper.regionList(query));
+                region.addGroupList(organizationMapper.groupList(query));
+                region.addAscList(organizationMapper.ascList(query));
             } else if ((StringUtils.hasLength(query.getProvId()) || StringUtils.hasLength(query.getCityId()))) {
+                // 如果省份，城市不为空，查询省份城市
                 region.addProvList(organizationMapper.provList(query));
                 region.addCityList(organizationMapper.cityList(query));
-                region.addAscList(organizationMapper.ascListByProvince(query));
+                region.addAscList(organizationMapper.ascList(query));
             }
             return region;
         } catch (Exception e) {

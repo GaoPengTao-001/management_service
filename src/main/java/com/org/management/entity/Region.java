@@ -24,6 +24,13 @@ public class Region {
         fmcList.add(map1);
         this.setFmcList(fmcList);
 
+        List<Map<String,String>> groupList = new ArrayList<>();
+        Map<String,String> map5 = new HashMap<>();
+        map5.put("ascGrpId","");
+        map5.put("ascGrpNm","所有");
+        groupList.add(map5);
+        this.setGroupList(groupList);
+
         List<Map<String,String>> provList = new ArrayList<>();
         Map<String,String> map2 = new HashMap<>();
         map2.put("provId","");
@@ -58,6 +65,11 @@ public class Region {
      * 小区列表
      */
     private List<Map<String, String>> fmcList;
+
+    /**
+     * 集团
+     */
+    private List<Map<String, String>> groupList;
 
 
     /**
@@ -151,5 +163,19 @@ public class Region {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public List<Map<String, String>> getGroupList() {
+        return groupList;
+    }
+
+    public void setGroupList(List<Map<String, String>> groupList) {
+        this.groupList = groupList;
+    }
+
+    public void addGroupList(List<Map<String, String>> list) {
+        if(!CollectionUtils.isEmpty(list)){
+            this.groupList.addAll(list);
+        }
     }
 }
