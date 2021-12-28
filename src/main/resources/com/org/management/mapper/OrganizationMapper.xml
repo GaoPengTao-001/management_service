@@ -4,8 +4,8 @@
     <!--大区列表-->
     <select id="regionList" resultType="java.util.Map">
       SELECT DISTINCT
-            A .region_id "region_id",
-            A .region_nm "region_nm"
+            to_char(A .region_id) "regionId",
+            A .region_nm "regionNm"
         FROM
             td_dds_fmc A
         ORDER BY
@@ -15,14 +15,12 @@
     <!--小区列表-->
     <select id="fmcList" resultType="java.util.Map">
         SELECT
-        A .region_id "region_id",
-        A .region_nm "region_nm",
-        A .fmc_id "fmc_id",
-        A .fmc_nm "fmc_nm"
+        to_char(A .fmc_id) "fmcId",
+        A .fmc_nm "fmcNm"
         FROM
         td_dds_fmc A
         <if test="'' != query.regionId and null != query.regionId">
-            AND A.region_id =#{ query.regionId }
+            where A.region_id =#{ query.regionId }
         </if>
         ORDER BY
         A .region_nm,
@@ -32,29 +30,28 @@
     <!--集团列表，和小区互斥-->
     <select id="groupList" resultType="java.util.Map">
         SELECT DISTINCT
-          t.region_id,
-          'GROUP:' || t.asc_grp_id asc_grp_id,
-          t.asc_grp_nm
+        to_char(t.asc_grp_id) "ascGrpId",
+        t.asc_grp_nm "ascGrpNm"
         FROM
           td_dds_asc t
         <if test="'' != query.regionId and null != query.regionId">
-            AND t.region_id =#{ query.regionId }
+            where t.region_id =#{ query.regionId }
         </if>
         ORDER BY
-          t.region_id,
-          asc_grp_id
+          t.asc_grp_id,
+          t.asc_grp_nm
     </select>
 
     <!--省份列表-->
     <select id="provList" resultType="java.util.Map">
         SELECT distinct
-          a.prov_id,
+          to_char(a.prov_id) "provId",
           decode(
               a.prov_cn_nm,
               NULL,
               '其它',
               a.prov_cn_nm
-            ) prov_cn_nm
+            ) "provCnNm"
         FROM
           td_dds_city a
         ORDER BY
@@ -64,12 +61,12 @@
     <!--城市列表-->
     <select id="cityList" resultType="java.util.Map">
         SELECT
-          a.city_id,
-          a.city_cn_nm
+        to_char(a.city_id) "cityId",
+          a.city_cn_nm "cityCnNm"
         FROM
           td_dds_city a
         <if test="'' != query.provId and null != query.provId">
-            AND a.prov_id =#{ query.provId }
+            where a.prov_id =#{ query.provId }
         </if>
         ORDER BY
           a.city_id
@@ -79,10 +76,8 @@
     <select id="ascList" resultType="java.util.Map">
         <![CDATA[
             SELECT
-                G .asc_id
-            VALUE
-                ,
-                G .asc_cd || '_' || G .asc_nm label
+                to_char(G .asc_id) "ascId",
+                G .asc_cd || '_' || G .asc_nm "ascNm"
             FROM
                 TD_DDS_ASC G
             WHERE

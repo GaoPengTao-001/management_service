@@ -34,20 +34,20 @@ public class Region {
         List<Map<String,String>> provList = new ArrayList<>();
         Map<String,String> map2 = new HashMap<>();
         map2.put("provId","");
-        map2.put("provComNm","所有");
+        map2.put("provCnNm","所有");
         provList.add(map2);
         this.setProvList(provList);
 
         List<Map<String,String>> cityList = new ArrayList<>();
         Map<String,String> map3 = new HashMap<>();
         map3.put("cityId","");
-        map3.put("cityComNm","所有");
+        map3.put("cityCnNm","所有");
         cityList.add(map3);
         this.setCityList(cityList);
 
         List<Map<String,String>> ascList = new ArrayList<>();
         Map<String,String> map4 = new HashMap<>();
-        map4.put("ascCd","");
+        map4.put("ascId","");
         map4.put("ascNm","所有");
         ascList.add(map4);
         this.setAscList(ascList);

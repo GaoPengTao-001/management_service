@@ -45,12 +45,24 @@ public class OrganizationService {
                 region.addProvList(organizationMapper.provList(query));
                 region.addCityList(organizationMapper.cityList(query));
                 region.addAscList(organizationMapper.ascList(query));
+            } else if (StringUtils.hasLength(query.getRegionId())) {
+                // 如果大区有值，判断小区或集团是否有值
+                region.addRegionList(organizationMapper.regionList(query));
+                region.addAscList(organizationMapper.ascList(query));
+                if (StringUtils.hasLength(query.getFmcId())) {
+                    region.addFmcList(organizationMapper.fmcList(query));
+                } else if (StringUtils.hasLength(query.getAscGrpId())) {
+                    region.addGroupList(organizationMapper.groupList(query));
+                } else {
+                    region.addFmcList(organizationMapper.fmcList(query));
+                    region.addGroupList(organizationMapper.groupList(query));
+                }
             } else if (StringUtils.hasLength(query.getFmcId())) {
-                // 如果小区id不为空，查询大区小区
+                // 如果小区不为空，查询大区，小区
                 region.addRegionList(organizationMapper.regionList(query));
                 region.addFmcList(organizationMapper.fmcList(query));
                 region.addAscList(organizationMapper.ascList(query));
-            } else if ((StringUtils.hasLength(query.getAscGrpId()))) {
+            } else if (StringUtils.hasLength(query.getAscGrpId())) {
                 // 如果集团id不为空，查询大区，集团
                 region.addRegionList(organizationMapper.regionList(query));
                 region.addGroupList(organizationMapper.groupList(query));
