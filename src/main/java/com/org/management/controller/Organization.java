@@ -1,20 +1,18 @@
 package com.org.management.controller;
 
 
-import com.org.management.entity.OutputValue;
+import com.org.management.entity.KpiRptDetail;
+import com.org.management.entity.KpiRptVo;
 import com.org.management.entity.Region;
 import com.org.management.entity.RegionQuery;
-import com.org.management.entity.ValueQuery;
+import com.org.management.entity.KpiQuery;
 import com.org.management.service.OrganizationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/organization")
@@ -29,12 +27,8 @@ public class Organization {
     }
 
     @PostMapping(value = "/getOutputValue")
-    public OutputValue getOutputValue(@RequestBody ValueQuery query) {
+    public KpiRptDetail getOutputValue(@RequestBody KpiQuery query) {
         return organizationService.getOutputValue(query);
     }
 
-    @PostMapping(value = "/getOutputValueDetail")
-    public List<OutputValue> getOutputValueDetail(@RequestBody ValueQuery query) {
-        return organizationService.getOutputValueDetail(query);
-    }
 }

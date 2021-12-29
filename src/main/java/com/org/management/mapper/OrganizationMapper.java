@@ -2,10 +2,9 @@ package com.org.management.mapper;
 
 
 import com.org.management.entity.OrgInfo;
-import com.org.management.entity.OutputValue;
-import com.org.management.entity.Region;
+import com.org.management.entity.KpiRptVo;
 import com.org.management.entity.RegionQuery;
-import com.org.management.entity.ValueQuery;
+import com.org.management.entity.KpiQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -62,9 +61,11 @@ public interface OrganizationMapper {
      */
     List<Map<String, String>> ascList(@Param("query") RegionQuery query);
 
-    OutputValue selectOutputValue(@Param("query") ValueQuery query);
+    List<KpiRptVo> selectKpiRpt(@Param("query") KpiQuery query);
 
-    List<OutputValue> selectOutputValueDetail(@Param("ids") List<OrgInfo> ids, @Param("dateValue") String dateValue);
+    KpiRptVo selectOutputValue(@Param("query") KpiQuery query);
+
+    List<KpiRptVo> selectOutputValueDetail(@Param("ids") List<OrgInfo> ids, @Param("dateValue") String dateValue);
 
     // 查询大区的id
     List<OrgInfo> selectRegionId();

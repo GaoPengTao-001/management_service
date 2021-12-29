@@ -1,10 +1,10 @@
 package com.org.management.service;
 
-import com.org.management.entity.OrgInfo;
-import com.org.management.entity.OutputValue;
+import com.org.management.entity.KpiRptDetail;
+import com.org.management.entity.KpiRptVo;
 import com.org.management.entity.Region;
 import com.org.management.entity.RegionQuery;
-import com.org.management.entity.ValueQuery;
+import com.org.management.entity.KpiQuery;
 import com.org.management.mapper.OrganizationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +13,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -80,58 +78,26 @@ public class OrganizationService {
         return null;
     }
 
-    public OutputValue getOutputValue(ValueQuery query) {
+    public KpiRptDetail getOutputValue(KpiQuery query) {
         try {
-            // 月
-            if ("1".equals(query.getTimeDimension())) {
-                String dateValue = query.getDateValue();
-                query.setDateValue(dateValue.replaceAll("-", ""));
+            KpiRptDetail kpiRptDetail = new KpiRptDetail();
+            // 查询当前orgId的kpi
+            List<KpiRptVo> kpiRptVos = organizationMapper.selectKpiRpt(query);
+            if (!CollectionUtils.isEmpty(kpiRptVos)) {
+                kpiRptDetail.setKpiRptVo(kpiRptVos.get(0));
             }
-            return organizationMapper.selectOutputValue(query);
+            // 查询当前orgId下级的kpi
+            // COUNTRY(全国);REGION(大区);FMC(小区);ASCGROUP(经销商集团);CITY(城市);PROVINCE(省份);ASC(维修站);
+            if("COUNTRY".equals(query.getOrgTp())){
+
+            }
+
+
+            return null;
         } catch (Exception e) {
             log.error("OrganizationService.getOutputValue异常", e);
             return null;
         }
     }
 
-    public List<OutputValue> getOutputValueDetail(ValueQuery query) {
-        try {
-            // 月
-            if ("1".equals(query.getTimeDimension())) {
-                String dateValue = query.getDateValue();
-                query.setDateValue(dateValue.replaceAll("-", ""));
-            }
-            List<OrgInfo> ids = new ArrayList<>();
-            // 查询经销商详情
-            if (CollectionUtils.isEmpty(ids) && StringUtils.hasLength(query.getAscCd())) {
-                ids.addAll(organizationMapper.selectAscCdDetailByAsc(query.getAscCd()));
-            }
-            // 小区下查询经销商详情
-            if (CollectionUtils.isEmpty(ids) && StringUtils.hasLength(query.getFmcId())) {
-                ids.addAll(organizationMapper.selectAscCdByFmcId(query.getFmcId()));
-            }
-            // 大区下查询小区详情
-            if (CollectionUtils.isEmpty(ids) && StringUtils.hasLength(query.getRegionId())) {
-                ids.addAll(organizationMapper.selectFmcIdByRegionId(query.getRegionId()));
-            }
-            // 全国下查询大区详情
-            if (CollectionUtils.isEmpty(ids)) {
-                ids.addAll(organizationMapper.selectRegionId());
-            }
-            // 通过id查询详情列表
-            List<OutputValue> outputValues = organizationMapper.selectOutputValueDetail(ids, query.getDateValue());
-            // 设置名称
-            if (!CollectionUtils.isEmpty(outputValues)) {
-                outputValues.forEach(item -> ids.forEach(id -> {
-                    if (id.getId().equals(item.getBusId())) {
-                        item.setOrgName(id.getName());
-                    }
-                }));
-            }
-            return outputValues;
-        } catch (Exception e) {
-            log.error("OrganizationService.getOutputValueDetail异常", e);
-            return null;
-        }
-    }
 }

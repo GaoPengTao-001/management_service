@@ -102,8 +102,27 @@
         ORDER BY
         G .asc_cd
     </select>
+    <select id="selectKpiRpt" resultType="com.org.management.entity.KpiRptVo">
+        SELECT
+            *
+        FROM
+            TF_KPI_RPT
+        WHERE
+            PERIOD_TP = #{query.periodTp}
+        AND PERIOD_CD = #{query.periodCd}
+        AND ORG_TP = #{query.orgTp}
+        <if test="null != query.orgId and '' != query.orgId">
+            AND ORG_ID = #{query.orgId}
+        </if>
+        <if test="null != query.orgIds and query.orgIds.size() > 0">
+            AND ORG_ID IN
+            <foreach item="item" index="index" collection="query.orgIds" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
 
-    <select id="selectOutputValue" resultType="com.org.management.entity.OutputValue">
+    <select id="selectOutputValue" resultType="com.org.management.entity.KpiRptVo">
         SELECT
             id AS id,
             value_date AS valueDate,
@@ -182,7 +201,7 @@
             ORDER BY
               ASC_NM ASC
     </select>
-    <select id="selectOutputValueDetail" resultType="com.org.management.entity.OutputValue">
+    <select id="selectOutputValueDetail" resultType="com.org.management.entity.KpiRptVo">
         SELECT
         id AS id,
         value_date AS valueDate,
