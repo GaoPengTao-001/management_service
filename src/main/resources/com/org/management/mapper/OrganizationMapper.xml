@@ -99,27 +99,48 @@
         <if test="'' != query.cityId and null != query.cityId">
             AND G .city_id =#{ query.cityId }
         </if>
+        <if test="'' != query.ascCd and null != query.ascCd">
+            AND G .ASC_ID =#{ query.ascCd }
+        </if>
         ORDER BY
         G .asc_cd
     </select>
     <select id="selectKpiRpt" resultType="com.org.management.entity.KpiRptVo">
         SELECT
-            *
+        period_cd "periodCd",
+        #{query.orgTp} "orgTp",
+        org_id "orgId",
+        COUNT (kpi_val) "kpiVal",
+        COUNT (lp_kpi_val) "lpKpiVal",
+        COUNT (ly_kpi_val) "lyKpiVal"
+
         FROM
-            TF_KPI_RPT
-        WHERE
-            PERIOD_TP = #{query.periodTp}
-        AND PERIOD_CD = #{query.periodCd}
-        AND ORG_TP = #{query.orgTp}
-        <if test="null != query.orgId and '' != query.orgId">
-            AND ORG_ID = #{query.orgId}
-        </if>
-        <if test="null != query.orgIds and query.orgIds.size() > 0">
-            AND ORG_ID IN
-            <foreach item="item" index="index" collection="query.orgIds" open="(" separator="," close=")">
-                #{item}
-            </foreach>
-        </if>
+        TF_KPI_RPT
+        <where>
+            <if test="null != query.orgId and '' != query.orgId">
+                AND ORG_ID = #{query.orgId}
+            </if>
+            <if test="null != query.orgIds and query.orgIds.size() > 0">
+                AND ORG_ID IN
+                <foreach item="item" index="index" collection="query.orgIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="null != query.periodTp and '' != query.periodTp">
+                AND period_tp = #{query.periodTp}
+            </if>
+            <if test="null != query.periodCd and '' != query.periodCd">
+                AND period_cd = #{query.periodCd}
+            </if>
+            <if test="null != query.orgTp and '' != query.orgTp">
+                AND org_tp = #{query.orgTp}
+            </if>
+        </where>
+        GROUP BY
+        PERIOD_CD,
+        ORG_ID
+        ORDER BY
+        ORG_ID ASC
     </select>
 
     <select id="selectOutputValue" resultType="com.org.management.entity.KpiRptVo">

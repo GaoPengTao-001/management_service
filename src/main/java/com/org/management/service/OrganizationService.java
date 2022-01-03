@@ -13,7 +13,11 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class OrganizationService {
@@ -86,18 +90,94 @@ public class OrganizationService {
             if (!CollectionUtils.isEmpty(kpiRptVos)) {
                 kpiRptDetail.setKpiRptVo(kpiRptVos.get(0));
             }
+
             // 查询当前orgId下级的kpi
+            KpiQuery downKpiQuery = new KpiQuery();
+            downKpiQuery.setPeriodTp(query.getPeriodTp());
+            downKpiQuery.setPeriodCd(query.getPeriodCd());
+            List<Map<String, String>> orgList;
+            List<Map<String, String>> orgs = null;
+            RegionQuery regionQuery = new RegionQuery();
             // COUNTRY(全国);REGION(大区);FMC(小区);ASCGROUP(经销商集团);CITY(城市);PROVINCE(省份);ASC(维修站);
-            if("COUNTRY".equals(query.getOrgTp())){
-
+            if ("COUNTRY".equals(query.getOrgTp())) {
+                // 查询所有大区id
+                orgList = organizationMapper.regionList(null);
+                orgs = getIds(orgList, "regionId", "regionNm");
+                downKpiQuery.setOrgTp("REGION");
+            } else if ("REGION".equals(query.getOrgTp())) {
+                // 查询所有小区id
+                regionQuery.setRegionId(query.getOrgId());
+                orgList = organizationMapper.fmcList(regionQuery);
+                orgs = getIds(orgList, "fmcId", "fmcNm");
+                downKpiQuery.setOrgTp("FMC");
+            } else if ("FMC".equals(query.getOrgTp())) {
+                // 查询所有经销商id
+                regionQuery.setFmcId(query.getOrgId());
+                orgList = organizationMapper.ascList(regionQuery);
+                orgs = getIds(orgList, "ascId", "ascNm");
+                downKpiQuery.setOrgTp("ASC");
+            } else if ("ASCGROUP".equals(query.getOrgTp())) {
+                // 经销商id
+                regionQuery.setAscGrpId(query.getOrgId());
+                orgList = organizationMapper.groupList(regionQuery);
+                orgs = getIds(orgList, "ascGrpId", "ascGrpNm");
+                downKpiQuery.setOrgTp("ASC");
+            } else if ("PROVINCE".equals(query.getOrgTp())) {
+                // 城市id
+                regionQuery.setProvId(query.getOrgId());
+                orgList = organizationMapper.cityList(regionQuery);
+                orgs = getIds(orgList, "cityId", "cityCnNm");
+                downKpiQuery.setOrgTp("REGION");
+            } else if ("CITY".equals(query.getOrgTp())) {
+                regionQuery.setCityId(query.getOrgId());
+                orgList = organizationMapper.ascList(regionQuery);
+                orgs = getIds(orgList, "ascId", "ascNm");
+                downKpiQuery.setOrgTp("ASC");
+            } else if ("ASC".equals(query.getOrgTp())) {
+                regionQuery.setAscCd(query.getOrgId());
+                orgList = organizationMapper.ascList(regionQuery);
+                orgs = getIds(orgList, "ascId", "ascNm");
+                downKpiQuery.setOrgTp("ASC");
             }
-
-
-            return null;
+            if (!CollectionUtils.isEmpty(orgs)) {
+                List<String> ids = orgs.stream().map(map -> map.get("id")).collect(Collectors.toList());
+                downKpiQuery.setOrgIds(ids);
+                List<KpiRptVo> kpiVos = organizationMapper.selectKpiRpt(downKpiQuery);
+                if (!CollectionUtils.isEmpty(kpiVos)) {
+                    orgs.forEach(org -> kpiVos.forEach(item -> {
+                        if (org.get("id").equals(item.getOrgId())) {
+                            item.setOrgName(org.get("name"));
+                        }
+                    }));
+                }
+                kpiRptDetail.setKpiRptVos(kpiVos);
+            }
+            return kpiRptDetail;
         } catch (Exception e) {
             log.error("OrganizationService.getOutputValue异常", e);
             return null;
         }
+    }
+
+    private List<Map<String, String>> getIds(List<Map<String, String>> orgList, String idKey, String nameKey) {
+        if (CollectionUtils.isEmpty(orgList) || !StringUtils.hasLength(idKey) || !StringUtils.hasLength(nameKey)) {
+            return null;
+        }
+
+        List<Map<String, String>> orgs = new ArrayList<>();
+        for (Map<String, String> map : orgList) {
+            Map<String, String> orgMap = new HashMap<>();
+            for (Map.Entry entry : map.entrySet()) {
+                if (idKey.equals(entry.getKey())) {
+                    orgMap.put("id", String.valueOf(entry.getValue()));
+                }
+                if (nameKey.equals(entry.getKey())) {
+                    orgMap.put("name", String.valueOf(entry.getValue()));
+                }
+            }
+            orgs.add(orgMap);
+        }
+        return orgs;
     }
 
 }

@@ -6,6 +6,7 @@ public class KpiRptVo {
     private String periodCd;
     private String orgTp;
     private String orgId;
+    private String orgName;
     private String vehAgeId;
     private String modelId;
     private String kpiVal;
@@ -117,5 +118,13 @@ public class KpiRptVo {
 
     public void setLoadFrom(String loadFrom) {
         this.loadFrom = loadFrom;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

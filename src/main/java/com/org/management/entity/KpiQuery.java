@@ -60,4 +60,12 @@ public class KpiQuery {
     public void setOrgId(String orgId) {
         this.orgId = orgId;
     }
+
+    public List<String> getOrgIds() {
+        return orgIds;
+    }
+
+    public void setOrgIds(List<String> orgIds) {
+        this.orgIds = orgIds;
+    }
 }
