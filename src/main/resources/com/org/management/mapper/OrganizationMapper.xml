@@ -105,6 +105,7 @@
         ORDER BY
         G .asc_cd
     </select>
+    <!--查询kpi-->
     <select id="selectKpiRpt" resultType="com.org.management.entity.KpiRptVo">
         SELECT
         period_cd "periodCd",
@@ -141,129 +142,5 @@
         ORG_ID
         ORDER BY
         ORG_ID ASC
-    </select>
-
-    <select id="selectOutputValue" resultType="com.org.management.entity.KpiRptVo">
-        SELECT
-            id AS id,
-            value_date AS valueDate,
-            busid AS busid,
-            totail AS totail,
-            totail_last AS totailLast,
-            totail_current AS totailCurrent,
-            claim AS claim,
-            claim_last AS claimLast,
-            claim_current AS claimCurrent,
-            guarantee AS guarantee,
-            guarantee_last AS guaranteeLast,
-            guarantee_current AS guaranteeCurrent,
-            no_guarantee AS noGuarantee,
-            no_guarantee_last AS noGuaranteeLast,
-            no_guarantee_current AS noGuaranteeCurrent,
-            no_claim AS noClaim,
-            no_claim_last AS noClaimLast,
-            no_claim_current AS noClaimCurrent,
-            maintain AS maintain,
-            maintain_last AS maintainLast,
-            maintain_current AS maintainCurrent,
-            REPAIR AS REPAIR,
-            repair_last AS repairLast,
-            repair_current AS repairCurrent,
-            accident AS accident,
-            accident_last AS accidentLast,
-            accident_current AS accidentCurrent,
-            sale AS sale,
-            sale_last AS saleLast,
-            sale_current AS saleCurrent,
-            rework AS rework,
-            rework_last AS reworkLast,
-            rework_current AS reworkCurrent
-        FROM
-            T_OUTPUT_VALUE
-        where busid = #{query.busId} and value_date = #{query.dateValue}
-    </select>
-    <select id="selectRegionId" resultType="com.org.management.entity.OrgInfo">
-        SELECT DISTINCT
-              REGION_ID id,
-              REGION_NM name
-            FROM
-              T_REGION
-            ORDER BY
-              REGION_NM ASC
-    </select>
-    <select id="selectFmcIdByRegionId" resultType="com.org.management.entity.OrgInfo">
-        SELECT DISTINCT
-                    FMC_ID id,
-                    FMC_NM name
-                FROM
-                    T_REGION
-                WHERE
-                    REGION_ID = #{id}
-                ORDER BY
-                    FMC_NM ASC
-    </select>
-    <select id="selectAscCdByFmcId" resultType="com.org.management.entity.OrgInfo">
-        SELECT DISTINCT
-              ASC_CD id,
-              ASC_NM name
-            FROM
-              T_REGION
-            where FMC_ID = #{id}
-            ORDER BY
-              ASC_NM ASC
-    </select>
-    <select id="selectAscCdDetailByAsc" resultType="com.org.management.entity.OrgInfo">
-        SELECT DISTINCT
-              ASC_CD id,
-              ASC_NM name
-            FROM
-              T_REGION
-            where ASC_CD = #{id}
-            ORDER BY
-              ASC_NM ASC
-    </select>
-    <select id="selectOutputValueDetail" resultType="com.org.management.entity.KpiRptVo">
-        SELECT
-        id AS id,
-        value_date AS valueDate,
-        busid AS busid,
-        totail AS totail,
-        totail_last AS totailLast,
-        totail_current AS totailCurrent,
-        claim AS claim,
-        claim_last AS claimLast,
-        claim_current AS claimCurrent,
-        guarantee AS guarantee,
-        guarantee_last AS guaranteeLast,
-        guarantee_current AS guaranteeCurrent,
-        no_guarantee AS noGuarantee,
-        no_guarantee_last AS noGuaranteeLast,
-        no_guarantee_current AS noGuaranteeCurrent,
-        no_claim AS noClaim,
-        no_claim_last AS noClaimLast,
-        no_claim_current AS noClaimCurrent,
-        maintain AS maintain,
-        maintain_last AS maintainLast,
-        maintain_current AS maintainCurrent,
-        REPAIR AS REPAIR,
-        repair_last AS repairLast,
-        repair_current AS repairCurrent,
-        accident AS accident,
-        accident_last AS accidentLast,
-        accident_current AS accidentCurrent,
-        sale AS sale,
-        sale_last AS saleLast,
-        sale_current AS saleCurrent,
-        rework AS rework,
-        rework_last AS reworkLast,
-        rework_current AS reworkCurrent
-        FROM
-        T_OUTPUT_VALUE
-        where busid in
-        <foreach item="item" index="index" collection="ids"
-                 open="(" separator="," close=")">
-            #{item.id}
-        </foreach>
-        and value_date = #{dateValue}
     </select>
 </mapper>

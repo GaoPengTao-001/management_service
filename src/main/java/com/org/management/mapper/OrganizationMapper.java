@@ -61,21 +61,11 @@ public interface OrganizationMapper {
      */
     List<Map<String, String>> ascList(@Param("query") RegionQuery query);
 
+    /**
+     * 总产值
+     *
+     * @param query
+     * @return
+     */
     List<KpiRptVo> selectKpiRpt(@Param("query") KpiQuery query);
-
-    KpiRptVo selectOutputValue(@Param("query") KpiQuery query);
-
-    List<KpiRptVo> selectOutputValueDetail(@Param("ids") List<OrgInfo> ids, @Param("dateValue") String dateValue);
-
-    // 查询大区的id
-    List<OrgInfo> selectRegionId();
-
-    // 通过大区id查询小区的id
-    List<OrgInfo> selectFmcIdByRegionId(@Param("id") String id);
-
-    // 通过小区的id查询经销商的id
-    List<OrgInfo> selectAscCdByFmcId(@Param("id") String id);
-
-    // 根据经销商id查询经销商详情
-    List<OrgInfo> selectAscCdDetailByAsc(@Param("id") String id);
 }
