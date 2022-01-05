@@ -114,7 +114,6 @@
         COUNT (kpi_val) "kpiVal",
         COUNT (lp_kpi_val) "lpKpiVal",
         COUNT (ly_kpi_val) "lyKpiVal"
-
         FROM
         TF_KPI_RPT
         <where>
