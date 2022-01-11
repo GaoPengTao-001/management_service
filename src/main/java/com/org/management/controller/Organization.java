@@ -22,8 +22,8 @@ public class Organization {
     private OrganizationService organizationService;
 
     @PostMapping(value = "/getRegion")
-    public String getRegion(@RequestBody RegionQuery query) {
-        return "哈哈哈";
+    public Region getRegion(@RequestBody RegionQuery query) {
+        return organizationService.getRegion(query);
     }
 
     @PostMapping(value = "/getOutputValue")
