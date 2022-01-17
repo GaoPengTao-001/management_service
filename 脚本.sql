@@ -343,7 +343,6 @@ create table tc_kpi
   CREATE_BY VARCHAR2(20)  default NULL,
   UPDATE_BY VARCHAR2(20)  default NULL,
   DATA_OWNER VARCHAR2(20)  default NULL
-
 );
 comment on column tc_kpi.KPI_ID is '对应二期序号。例如，1，1.1'/
 comment on column tc_kpi.KPI_CD is 'KPI的编码，按照编码规则，分为两层，第一层是KPI分类，第二层是KPI在本分类中的排序'/
@@ -398,3 +397,547 @@ comment on column tf_kpi_rpt.LY_KPI_VAL is '去年同期值;如:202002对应去�
 comment on column tf_kpi_rpt.FIRST_LOAD_DATE is '数据第一次加载日期'/
 comment on column tf_kpi_rpt.LAST_LOAD_DATE is '数据最后一次加载日期'/
 comment on column tf_kpi_rpt.LOAD_FROM is '数据来源'/
+
+
+-- 基盘总览表
+create table TF_BASE_CSTMR_RPT
+(
+	PERIOD_TP VARCHAR2(1) default NULL,
+	PERIOD_CD VARCHAR2(20) default NULL,
+	ORG_TP VARCHAR2(20) default NULL,
+	ORG_ID NUMBER(10) default NULL,
+	MODEL_ID NUMBER(10) default NULL,
+	VEH_AGE_ID NUMBER(10) default NULL,
+	BASE_CSTMR_ONE_YEAR NUMBER(16) default NULL,
+	BASE_CSTMR_FIVE_YEAR NUMBER(16) default NULL,
+	ONE_YEAR_CAR_BASE_CSTMR NUMBER(16) default NULL,
+	ONE_YEAR_CAR_SALE NUMBER(16) default NULL,
+	ONE_YEAR_CAR_IN_TIMES NUMBER(16) default NULL,
+	ONE_YEAR_CAR_IN_TIMES_MOL NUMBER(16) default NULL,
+	ONE_YEAR_CAR_IN_TIMES_DEN NUMBER(16) default NULL,
+	ONE_YEAR_CAR_PRICE NUMBER(16) default NULL,
+	ONE_YEAR_CAR_PRICE_MOL NUMBER(16) default NULL,
+	SEC_YEAR_CAR_BASE_CSTMR NUMBER(16) default NULL,
+	SEC_YEAR_CAR_SALE NUMBER(16) default NULL,
+	SEC_YEAR_CAR_IN_TIMES NUMBER(16) default NULL,
+	SEC_YEAR_CAR_IN_TIMES_MOL NUMBER(16) default NULL,
+	SEC_YEAR_CAR_IN_TIMES_DEN NUMBER(16) default NULL,
+	SEC_YEAR_CAR_PRICE NUMBER(16) default NULL,
+	SEC_YEAR_CAR_PRICE_MOL NUMBER(16) default NULL,
+	CAR_OT_ASC_BASE_CSTMR NUMBER(16) default NULL,
+	CAR_OT_ASC_IN_TIMES NUMBER(16) default NULL,
+	CAR_OT_ASC_IN_TIMES_MOL NUMBER(16) default NULL,
+	CAR_OT_ASC_IN_TIMES_DEN NUMBER(16) default NULL,
+	CAR_OT_ASC_PRICE NUMBER(16) default NULL,
+	CAR_OT_ASC_PRICE_MOL NUMBER(16) default NULL,
+	LY_RETAIN_BASE_CSTMR NUMBER(16) default NULL,
+	LY_RETAIN_BASE_CSTMR_DEN NUMBER(16) default NULL,
+	LY_RETAIN_IN_TIMES NUMBER(16) default NULL,
+	LY_RETAIN_IN_TIMES_MOL NUMBER(16) default NULL,
+	LY_RETAIN_IN_TIMES_DEN NUMBER(16) default NULL,
+	LY_RETAIN_PRICE NUMBER(16) default NULL,
+	LY_RETAIN_PRICE_MOL NUMBER(16) default NULL,
+	OY_RETAIN_BASE_CSTMR NUMBER(16) default NULL,
+	OY_RETAIN_BASE_CSTMR_DEN NUMBER(16) default NULL,
+	OY_RETAIN_IN_TIMES NUMBER(16) default NULL,
+	OY_RETAIN_IN_TIMES_MOL NUMBER(16) default NULL,
+	OY_RETAIN_IN_TIMES_DEN NUMBER(16) default NULL,
+	OY_RETAIN_PRICE NUMBER(16) default NULL,
+	OY_RETAIN_PRICE_MOL NUMBER(16) default NULL,
+	CAR_OT_ASC_BASE_ALL_CSTMR NUMBER(16) default NULL,
+	CAR_OT_ASC_ALL_IN_TIMES NUMBER(16) default NULL,
+	CAR_OT_ASC_ALL_IN_TIMES_MOL NUMBER(16) default NULL,
+	CAR_OT_ASC_ALL_IN_TIMES_DEN NUMBER(16) default NULL,
+	CAR_OT_ASC_ALL_PRICE NUMBER(16) default NULL,
+	CAR_OT_ASC_ALL_PRICE_MOL NUMBER(16) default NULL,
+	TRU_BASE_CSTMR NUMBER(16) default NULL,
+	TRU_BASE_IN_TIMES NUMBER(16) default NULL,
+	TRU_BASE_IN_TIMES_MOL NUMBER(16) default NULL,
+	TRU_BASE_IN_TIMES_DEN NUMBER(16) default NULL,
+	TRU_BASE_PRICE NUMBER(16) default NULL,
+	TRU_BASE_PRICE_MOL NUMBER(16) default NULL,
+	BASE_CSTMR_ONE_YEAR_NUM NUMBER(16) default NULL,
+	BRAND_LOYALTY_NUM NUMBER(16) default NULL,
+	BRAND_LOYALTY_DEN NUMBER(16) default NULL,
+	NEW_CAR_ADD_BASE_NUM NUMBER(16) default NULL,
+	NEW_CAR_ADD_BASE_DEN NUMBER(16) default NULL,
+	OWN_ASC_BASE_NUM NUMBER(16) default NULL,
+	OWN_ASC_BASE_DEN NUMBER(16) default NULL,
+	BASE_CSTMR_FIVE_YEAR_NUM NUMBER(16) default NULL,
+	LP_BASE_CSTMR_ONE_YEAR NUMBER(16) default NULL,
+	LP_BASE_CSTMR_FIVE_YEAR NUMBER(16) default NULL,
+	LP_ONE_YEAR_CAR_BASE_CSTMR NUMBER(16) default NULL,
+	LP_ONE_YEAR_CAR_SALE NUMBER(16) default NULL,
+	LP_ONE_YEAR_CAR_IN_TIMES NUMBER(16) default NULL,
+	LP_ONE_YEAR_CAR_IN_TIMES_MOL NUMBER(16) default NULL,
+	LP_ONE_YEAR_CAR_IN_TIMES_DEN NUMBER(16) default NULL,
+	LP_ONE_YEAR_CAR_PRICE NUMBER(16) default NULL,
+	LP_ONE_YEAR_CAR_PRICE_MOL NUMBER(16) default NULL,
+	LP_SEC_YEAR_CAR_BASE_CSTMR NUMBER(16) default NULL,
+	LP_SEC_YEAR_CAR_SALE NUMBER(16) default NULL,
+	LP_SEC_YEAR_CAR_IN_TIMES NUMBER(16) default NULL,
+	LP_SEC_YEAR_CAR_IN_TIMES_MOL NUMBER(16) default NULL,
+	LP_SEC_YEAR_CAR_IN_TIMES_DEN NUMBER(16) default NULL,
+	LP_SEC_YEAR_CAR_PRICE NUMBER(16) default NULL,
+	LP_SEC_YEAR_CAR_PRICE_MOL NUMBER(16) default NULL,
+	LP_CAR_OT_ASC_BASE_CSTMR NUMBER(16) default NULL,
+	LP_CAR_OT_ASC_IN_TIMES NUMBER(16) default NULL,
+	LP_CAR_OT_ASC_IN_TIMES_MOL NUMBER(16) default NULL,
+	LP_CAR_OT_ASC_IN_TIMES_DEN NUMBER(16) default NULL,
+	LP_CAR_OT_ASC_PRICE NUMBER(16) default NULL,
+	LP_CAR_OT_ASC_PRICE_MOL NUMBER(16) default NULL,
+	LP_LY_RETAIN_BASE_CSTMR NUMBER(16) default NULL,
+	LP_LY_RETAIN_BASE_CSTMR_DEN NUMBER(16) default NULL,
+	LP_LY_RETAIN_IN_TIMES NUMBER(16) default NULL,
+	LP_LY_RETAIN_IN_TIMES_MOL NUMBER(16) default NULL,
+	LP_LY_RETAIN_IN_TIMES_DEN NUMBER(16) default NULL,
+	LP_LY_RETAIN_PRICE NUMBER(16) default NULL,
+	LP_LY_RETAIN_PRICE_MOL NUMBER(16) default NULL,
+	LP_OY_RETAIN_BASE_CSTMR NUMBER(16) default NULL,
+	LP_OY_RETAIN_BASE_CSTMR_DEN NUMBER(16) default NULL,
+	LP_OY_RETAIN_IN_TIMES NUMBER(16) default NULL,
+	LP_OY_RETAIN_IN_TIMES_MOL NUMBER(16) default NULL,
+	LP_OY_RETAIN_IN_TIMES_DEN NUMBER(16) default NULL,
+	LP_OY_RETAIN_PRICE NUMBER(16) default NULL,
+	LP_OY_RETAIN_PRICE_MOL NUMBER(16) default NULL,
+	LP_CAR_OT_ASC_BASE_ALL_CSTMR NUMBER(16) default NULL,
+	LP_CAR_OT_ASC_ALL_IN_TIMES NUMBER(16) default NULL,
+	LP_CAR_OT_ASC_ALL_IN_TIMES_MOL NUMBER(16) default NULL,
+	LP_CAR_OT_ASC_ALL_IN_TIMES_DEN NUMBER(16) default NULL,
+	LP_CAR_OT_ASC_ALL_PRICE NUMBER(16) default NULL,
+	LP_CAR_OT_ASC_ALL_PRICE_MOL NUMBER(16) default NULL,
+	LP_TRU_BASE_CSTMR NUMBER(16) default NULL,
+	LP_TRU_BASE_IN_TIMES NUMBER(16) default NULL,
+	LP_TRU_BASE_IN_TIMES_MOL NUMBER(16) default NULL,
+	LP_TRU_BASE_IN_TIMES_DEN NUMBER(16) default NULL,
+	LP_TRU_BASE_PRICE NUMBER(16) default NULL,
+	LP_TRU_BASE_PRICE_MOL NUMBER(16) default NULL,
+	LP_BASE_CSTMR_ONE_YEAR_NUM NUMBER(16) default NULL,
+	LP_BRAND_LOYALTY_NUM NUMBER(16) default NULL,
+	LP_BRAND_LOYALTY_DEN NUMBER(16) default NULL,
+	LP_NEW_CAR_ADD_BASE_NUM NUMBER(16) default NULL,
+	LP_NEW_CAR_ADD_BASE_DEN NUMBER(16) default NULL,
+	LP_OWN_ASC_BASE_NUM NUMBER(16) default NULL,
+	LP_OWN_ASC_BASE_DEN NUMBER(16) default NULL,
+	LP_BASE_CSTMR_FIVE_YEAR_NUM NUMBER(16) default NULL,
+	LY_BASE_CSTMR_ONE_YEAR NUMBER(16) default NULL,
+	LY_BASE_CSTMR_FIVE_YEAR NUMBER(16) default NULL,
+	LY_ONE_YEAR_CAR_BASE_CSTMR NUMBER(16) default NULL,
+	LY_ONE_YEAR_CAR_SALE NUMBER(16) default NULL,
+	LY_ONE_YEAR_CAR_IN_TIMES NUMBER(16) default NULL,
+	LY_ONE_YEAR_CAR_IN_TIMES_MOL NUMBER(16) default NULL,
+	LY_ONE_YEAR_CAR_IN_TIMES_DEN NUMBER(16) default NULL,
+	LY_ONE_YEAR_CAR_PRICE NUMBER(16) default NULL,
+	LY_ONE_YEAR_CAR_PRICE_MOL NUMBER(16) default NULL,
+	LY_SEC_YEAR_CAR_BASE_CSTMR NUMBER(16) default NULL,
+	LY_SEC_YEAR_CAR_SALE NUMBER(16) default NULL,
+	LY_SEC_YEAR_CAR_IN_TIMES NUMBER(16) default NULL,
+	LY_SEC_YEAR_CAR_IN_TIMES_MOL NUMBER(16) default NULL,
+	LY_SEC_YEAR_CAR_IN_TIMES_DEN NUMBER(16) default NULL,
+	LY_SEC_YEAR_CAR_PRICE NUMBER(16) default NULL,
+	LY_SEC_YEAR_CAR_PRICE_MOL NUMBER(16) default NULL,
+	LY_CAR_OT_ASC_BASE_CSTMR NUMBER(16) default NULL,
+	LY_CAR_OT_ASC_IN_TIMES NUMBER(16) default NULL,
+	LY_CAR_OT_ASC_IN_TIMES_MOL NUMBER(16) default NULL,
+	LY_CAR_OT_ASC_IN_TIMES_DEN NUMBER(16) default NULL,
+	LY_CAR_OT_ASC_PRICE NUMBER(16) default NULL,
+	LY_CAR_OT_ASC_PRICE_MOL NUMBER(16) default NULL,
+	LY_LY_RETAIN_BASE_CSTMR NUMBER(16) default NULL,
+	LY_LY_RETAIN_BASE_CSTMR_DEN NUMBER(16) default NULL,
+	LY_LY_RETAIN_IN_TIMES NUMBER(16) default NULL,
+	LY_LY_RETAIN_IN_TIMES_MOL NUMBER(16) default NULL,
+	LY_LY_RETAIN_IN_TIMES_DEN NUMBER(16) default NULL,
+	LY_LY_RETAIN_PRICE NUMBER(16) default NULL,
+	LY_LY_RETAIN_PRICE_MOL NUMBER(16) default NULL,
+	LY_OY_RETAIN_BASE_CSTMR NUMBER(16) default NULL,
+	LY_OY_RETAIN_BASE_CSTMR_DEN NUMBER(16) default NULL,
+	LY_OY_RETAIN_IN_TIMES NUMBER(16) default NULL,
+	LY_OY_RETAIN_IN_TIMES_MOL NUMBER(16) default NULL,
+	LY_OY_RETAIN_IN_TIMES_DEN NUMBER(16) default NULL,
+	LY_OY_RETAIN_PRICE NUMBER(16) default NULL,
+	LY_OY_RETAIN_PRICE_MOL NUMBER(16) default NULL,
+	LY_CAR_OT_ASC_BASE_ALL_CSTMR NUMBER(16) default NULL,
+	LY_CAR_OT_ASC_ALL_IN_TIMES NUMBER(16) default NULL,
+	LY_CAR_OT_ASC_ALL_IN_TIMES_MOL NUMBER(16) default NULL,
+	LY_CAR_OT_ASC_ALL_IN_TIMES_DEN NUMBER(16) default NULL,
+	LY_CAR_OT_ASC_ALL_PRICE NUMBER(16) default NULL,
+	LY_CAR_OT_ASC_ALL_PRICE_MOL NUMBER(16) default NULL,
+	LY_TRU_BASE_CSTMR NUMBER(16) default NULL,
+	LY_TRU_BASE_IN_TIMES NUMBER(16) default NULL,
+	LY_TRU_BASE_IN_TIMES_MOL NUMBER(16) default NULL,
+	LY_TRU_BASE_IN_TIMES_DEN NUMBER(16) default NULL,
+	LY_TRU_BASE_PRICE NUMBER(16) default NULL,
+	LY_TRU_BASE_PRICE_MOL NUMBER(16) default NULL,
+	LY_BASE_CSTMR_ONE_YEAR_NUM NUMBER(16) default NULL,
+	LY_BRAND_LOYALTY_NUM NUMBER(16) default NULL,
+	LY_BRAND_LOYALTY_DEN NUMBER(16) default NULL,
+	LY_NEW_CAR_ADD_BASE_NUM NUMBER(16) default NULL,
+	LY_NEW_CAR_ADD_BASE_DEN NUMBER(16) default NULL,
+	LY_OWN_ASC_BASE_NUM NUMBER(16) default NULL,
+	LY_OWN_ASC_BASE_DEN NUMBER(16) default NULL,
+	LY_BASE_CSTMR_FIVE_YEAR_NUM NUMBER(16) default NULL,
+	FIRST_LOAD_DATE VARCHAR2(100) default NULL,
+	LAST_LOAD_DATE VARCHAR2(100) default NULL,
+	LOAD_FROM VARCHAR2(10) default NULL
+);
+
+comment on column TF_BASE_CSTMR_RPT.PERIOD_TP is '时间类型: D(日);W(周);M(月);Q(季);H(半年);Y(年);'/
+comment on column TF_BASE_CSTMR_RPT.PERIOD_CD is '统计周期: yyyymmdd(日); yyyymm(月); yyyyQx(季度); yyyyHx(半年); yyyy(年);'/
+comment on column TF_BASE_CSTMR_RPT.ORG_TP is 'ASC(维修站); FMC(小区); REGION(大区); CITY(城市); PROVINCE(省份); COUNTRY(全国)；ASCGROUP(经销商集团);'/
+comment on column TF_BASE_CSTMR_RPT.ORG_ID is '存放ASC_ID/FMC_ID/REGION_ID/CITY_ID/PROV_ID/BRAND_ID....'/
+comment on column TF_BASE_CSTMR_RPT.MODEL_ID is '车型ID'/
+comment on column TF_BASE_CSTMR_RPT.VEH_AGE_ID is '车龄'/
+comment on column TF_BASE_CSTMR_RPT.BASE_CSTMR_ONE_YEAR is '一年基盘'/
+comment on column TF_BASE_CSTMR_RPT.BASE_CSTMR_FIVE_YEAR is '五年基盘'/
+comment on column TF_BASE_CSTMR_RPT.ONE_YEAR_CAR_BASE_CSTMR is '新车基盘（新车基盘转化率分子）'/
+comment on column TF_BASE_CSTMR_RPT.ONE_YEAR_CAR_SALE is '新车销量（新车基盘转化率分母）'/
+comment on column TF_BASE_CSTMR_RPT.ONE_YEAR_CAR_IN_TIMES is '新车进站频次'/
+comment on column TF_BASE_CSTMR_RPT.ONE_YEAR_CAR_IN_TIMES_MOL is '新车进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.ONE_YEAR_CAR_IN_TIMES_DEN is '新车进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.ONE_YEAR_CAR_PRICE is '新车客单价'/
+comment on column TF_BASE_CSTMR_RPT.ONE_YEAR_CAR_PRICE_MOL is '新车客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.SEC_YEAR_CAR_BASE_CSTMR is '次新车基盘（次新车基盘转化率分子)'/
+comment on column TF_BASE_CSTMR_RPT.SEC_YEAR_CAR_SALE is '次新车销量（次新车基盘转化率分母)'/
+comment on column TF_BASE_CSTMR_RPT.SEC_YEAR_CAR_IN_TIMES is '次新车进站频次'/
+comment on column TF_BASE_CSTMR_RPT.SEC_YEAR_CAR_IN_TIMES_MOL is '次新车进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.SEC_YEAR_CAR_IN_TIMES_DEN is '次新车进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.SEC_YEAR_CAR_PRICE is '次新车客单价'/
+comment on column TF_BASE_CSTMR_RPT.SEC_YEAR_CAR_PRICE_MOL is '次新车客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.CAR_OT_ASC_BASE_CSTMR is '他店流入新车基盘'/
+comment on column TF_BASE_CSTMR_RPT.CAR_OT_ASC_IN_TIMES is '他店流入新车进站频次'/
+comment on column TF_BASE_CSTMR_RPT.CAR_OT_ASC_IN_TIMES_MOL is '他店流入新车进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.CAR_OT_ASC_IN_TIMES_DEN is '他店流入新车进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.CAR_OT_ASC_PRICE is '他店流入新车客单价'/
+comment on column TF_BASE_CSTMR_RPT.CAR_OT_ASC_PRICE_MOL is '他店流入新车客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_RETAIN_BASE_CSTMR is '上一年基盘留存（基盘转化率分子)'/
+comment on column TF_BASE_CSTMR_RPT.LY_RETAIN_BASE_CSTMR_DEN is '上一年基盘留存（基盘转化率分母)'/
+comment on column TF_BASE_CSTMR_RPT.LY_RETAIN_IN_TIMES is '上一年基盘留存进站频次'/
+comment on column TF_BASE_CSTMR_RPT.LY_RETAIN_IN_TIMES_MOL is '上一年基盘留存进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_RETAIN_IN_TIMES_DEN is '上一年基盘留存进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LY_RETAIN_PRICE is '上一年基盘留存客单价'/
+comment on column TF_BASE_CSTMR_RPT.LY_RETAIN_PRICE_MOL is '上一年基盘留存客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.OY_RETAIN_BASE_CSTMR is '他年留存基盘（基盘转化率分子)'/
+comment on column TF_BASE_CSTMR_RPT.OY_RETAIN_BASE_CSTMR_DEN is '他年留存基盘分母（基盘转化率分母)'/
+comment on column TF_BASE_CSTMR_RPT.OY_RETAIN_IN_TIMES is '他年留存基盘车进站频次'/
+comment on column TF_BASE_CSTMR_RPT.OY_RETAIN_IN_TIMES_MOL is '他年留存基盘车进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.OY_RETAIN_IN_TIMES_DEN is '他年留存基盘车进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.OY_RETAIN_PRICE is '他年留存基盘车客单价'/
+comment on column TF_BASE_CSTMR_RPT.OY_RETAIN_PRICE_MOL is '他年留存基盘车客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.CAR_OT_ASC_BASE_ALL_CSTMR is '外店基盘流入'/
+comment on column TF_BASE_CSTMR_RPT.CAR_OT_ASC_ALL_IN_TIMES is '外店基盘流入频次'/
+comment on column TF_BASE_CSTMR_RPT.CAR_OT_ASC_ALL_IN_TIMES_MOL is '外店基盘流入频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.CAR_OT_ASC_ALL_IN_TIMES_DEN is '外店基盘流入频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.CAR_OT_ASC_ALL_PRICE is '外店基盘流入客单价'/
+comment on column TF_BASE_CSTMR_RPT.CAR_OT_ASC_ALL_PRICE_MOL is '外店基盘流入客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.TRU_BASE_CSTMR is '托管基盘流入'/
+comment on column TF_BASE_CSTMR_RPT.TRU_BASE_IN_TIMES is '托管基盘流入频次'/
+comment on column TF_BASE_CSTMR_RPT.TRU_BASE_IN_TIMES_MOL is '托管基盘流入频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.TRU_BASE_IN_TIMES_DEN is '托管基盘流入频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.TRU_BASE_PRICE is '托管基盘流入客单价'/
+comment on column TF_BASE_CSTMR_RPT.TRU_BASE_PRICE_MOL is '托管基盘流入客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.BASE_CSTMR_ONE_YEAR_NUM is '一年忠诚率分子(一年基盘分子)'/
+comment on column TF_BASE_CSTMR_RPT.BRAND_LOYALTY_NUM is '品牌忠诚率分子'/
+comment on column TF_BASE_CSTMR_RPT.BRAND_LOYALTY_DEN is '品牌忠诚率分母'/
+comment on column TF_BASE_CSTMR_RPT.NEW_CAR_ADD_BASE_NUM is '新车新增基盘-分子'/
+comment on column TF_BASE_CSTMR_RPT.NEW_CAR_ADD_BASE_DEN is '新车新增基盘-分母'/
+comment on column TF_BASE_CSTMR_RPT.OWN_ASC_BASE_NUM is '本店原有基盘-分子'/
+comment on column TF_BASE_CSTMR_RPT.OWN_ASC_BASE_DEN is '本店原有基盘-分母'/
+comment on column TF_BASE_CSTMR_RPT.BASE_CSTMR_FIVE_YEAR_NUM is '客户流失率(五年基盘分子)'/
+comment on column TF_BASE_CSTMR_RPT.LP_BASE_CSTMR_ONE_YEAR is '(上期值)一年基盘'/
+comment on column TF_BASE_CSTMR_RPT.LP_BASE_CSTMR_FIVE_YEAR is '(上期值)五年基盘'/
+comment on column TF_BASE_CSTMR_RPT.LP_ONE_YEAR_CAR_BASE_CSTMR is '(上期值)新车基盘（新车基盘转化率分子）'/
+comment on column TF_BASE_CSTMR_RPT.LP_ONE_YEAR_CAR_SALE is '(上期值)新车销量（新车基盘转化率分母）'/
+comment on column TF_BASE_CSTMR_RPT.LP_ONE_YEAR_CAR_IN_TIMES is '(上期值)新车进站频次'/
+comment on column TF_BASE_CSTMR_RPT.LP_ONE_YEAR_CAR_IN_TIMES_MOL is '(上期值)新车进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_ONE_YEAR_CAR_IN_TIMES_DEN is '(上期值)新车进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LP_ONE_YEAR_CAR_PRICE is '(上期值)新车客单价'/
+comment on column TF_BASE_CSTMR_RPT.LP_ONE_YEAR_CAR_PRICE_MOL is '(上期值)新车客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_SEC_YEAR_CAR_BASE_CSTMR is '(上期值)次新车基盘（次新车基盘转化率分子)'/
+comment on column TF_BASE_CSTMR_RPT.LP_SEC_YEAR_CAR_SALE is '(上期值)次新车销量（次新车基盘转化率分母)'/
+comment on column TF_BASE_CSTMR_RPT.LP_SEC_YEAR_CAR_IN_TIMES is '(上期值)次新车进站频次'/
+comment on column TF_BASE_CSTMR_RPT.LP_SEC_YEAR_CAR_IN_TIMES_MOL is '(上期值)次新车进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_SEC_YEAR_CAR_IN_TIMES_DEN is '(上期值)次新车进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LP_SEC_YEAR_CAR_PRICE is '(上期值)次新车客单价'/
+comment on column TF_BASE_CSTMR_RPT.LP_SEC_YEAR_CAR_PRICE_MOL is '(上期值)次新车客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_CAR_OT_ASC_BASE_CSTMR is '(上期值)他店流入新车基盘'/
+comment on column TF_BASE_CSTMR_RPT.LP_CAR_OT_ASC_IN_TIMES is '(上期值)他店流入新车进站频次'/
+comment on column TF_BASE_CSTMR_RPT.LP_CAR_OT_ASC_IN_TIMES_MOL is '(上期值)他店流入新车进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_CAR_OT_ASC_IN_TIMES_DEN is '(上期值)他店流入新车进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LP_CAR_OT_ASC_PRICE is '(上期值)他店流入新车客单价'/
+comment on column TF_BASE_CSTMR_RPT.LP_CAR_OT_ASC_PRICE_MOL is '(上期值)他店流入新车客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_LY_RETAIN_BASE_CSTMR is '(上期值)上一年基盘留存（基盘转化率分子)'/
+comment on column TF_BASE_CSTMR_RPT.LP_LY_RETAIN_BASE_CSTMR_DEN is '(上期值)上一年基盘留存（基盘转化率分母)'/
+comment on column TF_BASE_CSTMR_RPT.LP_LY_RETAIN_IN_TIMES is '(上期值)上一年基盘留存进站频次'/
+comment on column TF_BASE_CSTMR_RPT.LP_LY_RETAIN_IN_TIMES_MOL is '(上期值)上一年基盘留存进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_LY_RETAIN_IN_TIMES_DEN is '(上期值)上一年基盘留存进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LP_LY_RETAIN_PRICE is '(上期值)上一年基盘留存客单价'/
+comment on column TF_BASE_CSTMR_RPT.LP_LY_RETAIN_PRICE_MOL is '(上期值)上一年基盘留存客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_OY_RETAIN_BASE_CSTMR is '(上期值)他年留存基盘（基盘转化率分子)'/
+comment on column TF_BASE_CSTMR_RPT.LP_OY_RETAIN_BASE_CSTMR_DEN is '(上期值)他年留存基盘分母（基盘转化率分母)'/
+comment on column TF_BASE_CSTMR_RPT.LP_OY_RETAIN_IN_TIMES is '(上期值)他年留存基盘车进站频次'/
+comment on column TF_BASE_CSTMR_RPT.LP_OY_RETAIN_IN_TIMES_MOL is '(上期值)他年留存基盘车进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_OY_RETAIN_IN_TIMES_DEN is '(上期值)他年留存基盘车进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LP_OY_RETAIN_PRICE is '(上期值)他年留存基盘车客单价'/
+comment on column TF_BASE_CSTMR_RPT.LP_OY_RETAIN_PRICE_MOL is '(上期值)他年留存基盘车客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_CAR_OT_ASC_BASE_ALL_CSTMR is '(上期值)外店基盘流入'/
+comment on column TF_BASE_CSTMR_RPT.LP_CAR_OT_ASC_ALL_IN_TIMES is '(上期值)外店基盘流入频次'/
+comment on column TF_BASE_CSTMR_RPT.LP_CAR_OT_ASC_ALL_IN_TIMES_MOL is '(上期值)外店基盘流入频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_CAR_OT_ASC_ALL_IN_TIMES_DEN is '(上期值)外店基盘流入频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LP_CAR_OT_ASC_ALL_PRICE is '(上期值)外店基盘流入客单价'/
+comment on column TF_BASE_CSTMR_RPT.LP_CAR_OT_ASC_ALL_PRICE_MOL is '(上期值)外店基盘流入客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_TRU_BASE_CSTMR is '(上期值)托管基盘流入'/
+comment on column TF_BASE_CSTMR_RPT.LP_TRU_BASE_IN_TIMES is '(上期值)托管基盘流入频次'/
+comment on column TF_BASE_CSTMR_RPT.LP_TRU_BASE_IN_TIMES_MOL is '(上期值)托管基盘流入频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_TRU_BASE_IN_TIMES_DEN is '(上期值)托管基盘流入频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LP_TRU_BASE_PRICE is '(上期值)托管基盘流入客单价'/
+comment on column TF_BASE_CSTMR_RPT.LP_TRU_BASE_PRICE_MOL is '(上期值)托管基盘流入客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_BASE_CSTMR_ONE_YEAR_NUM is '(上期值)一年忠诚率分子(一年基盘分子)'/
+comment on column TF_BASE_CSTMR_RPT.LP_BRAND_LOYALTY_NUM is '(上期值)品牌忠诚率分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_BRAND_LOYALTY_DEN is '(上期值)品牌忠诚率分母'/
+comment on column TF_BASE_CSTMR_RPT.LP_NEW_CAR_ADD_BASE_NUM is '(上期值)新车新增基盘-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_NEW_CAR_ADD_BASE_DEN is '(上期值)新车新增基盘-分母'/
+comment on column TF_BASE_CSTMR_RPT.LP_OWN_ASC_BASE_NUM is '(上期值)本店原有基盘-分子'/
+comment on column TF_BASE_CSTMR_RPT.LP_OWN_ASC_BASE_DEN is '(上期值)本店原有基盘-分母'/
+comment on column TF_BASE_CSTMR_RPT.LP_BASE_CSTMR_FIVE_YEAR_NUM is '(上期值)客户流失率(五年基盘分子)'/
+comment on column TF_BASE_CSTMR_RPT.LY_BASE_CSTMR_ONE_YEAR is '(同期值)一年基盘'/
+comment on column TF_BASE_CSTMR_RPT.LY_BASE_CSTMR_FIVE_YEAR is '(同期值)五年基盘'/
+comment on column TF_BASE_CSTMR_RPT.LY_ONE_YEAR_CAR_BASE_CSTMR is '(同期值)新车基盘（新车基盘转化率分子）'/
+comment on column TF_BASE_CSTMR_RPT.LY_ONE_YEAR_CAR_SALE is '(同期值)新车销量（新车基盘转化率分母）'/
+comment on column TF_BASE_CSTMR_RPT.LY_ONE_YEAR_CAR_IN_TIMES is '(同期值)新车进站频次'/
+comment on column TF_BASE_CSTMR_RPT.LY_ONE_YEAR_CAR_IN_TIMES_MOL is '(同期值)新车进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_ONE_YEAR_CAR_IN_TIMES_DEN is '(同期值)新车进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LY_ONE_YEAR_CAR_PRICE is '(同期值)新车客单价'/
+comment on column TF_BASE_CSTMR_RPT.LY_ONE_YEAR_CAR_PRICE_MOL is '(同期值)新车客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_SEC_YEAR_CAR_BASE_CSTMR is '(同期值)次新车基盘（次新车基盘转化率分子)'/
+comment on column TF_BASE_CSTMR_RPT.LY_SEC_YEAR_CAR_SALE is '(同期值)次新车销量（次新车基盘转化率分母)'/
+comment on column TF_BASE_CSTMR_RPT.LY_SEC_YEAR_CAR_IN_TIMES is '(同期值)次新车进站频次'/
+comment on column TF_BASE_CSTMR_RPT.LY_SEC_YEAR_CAR_IN_TIMES_MOL is '(同期值)次新车进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_SEC_YEAR_CAR_IN_TIMES_DEN is '(同期值)次新车进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LY_SEC_YEAR_CAR_PRICE is '(同期值)次新车客单价'/
+comment on column TF_BASE_CSTMR_RPT.LY_SEC_YEAR_CAR_PRICE_MOL is '(同期值)次新车客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_CAR_OT_ASC_BASE_CSTMR is '(同期值)他店流入新车基盘'/
+comment on column TF_BASE_CSTMR_RPT.LY_CAR_OT_ASC_IN_TIMES is '(同期值)他店流入新车进站频次'/
+comment on column TF_BASE_CSTMR_RPT.LY_CAR_OT_ASC_IN_TIMES_MOL is '(同期值)他店流入新车进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_CAR_OT_ASC_IN_TIMES_DEN is '(同期值)他店流入新车进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LY_CAR_OT_ASC_PRICE is '(同期值)他店流入新车客单价'/
+comment on column TF_BASE_CSTMR_RPT.LY_CAR_OT_ASC_PRICE_MOL is '(同期值)他店流入新车客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_LY_RETAIN_BASE_CSTMR is '(同期值)上一年基盘留存（基盘转化率分子)'/
+comment on column TF_BASE_CSTMR_RPT.LY_LY_RETAIN_BASE_CSTMR_DEN is '(同期值)上一年基盘留存（基盘转化率分母)'/
+comment on column TF_BASE_CSTMR_RPT.LY_LY_RETAIN_IN_TIMES is '(同期值)上一年基盘留存进站频次'/
+comment on column TF_BASE_CSTMR_RPT.LY_LY_RETAIN_IN_TIMES_MOL is '(同期值)上一年基盘留存进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_LY_RETAIN_IN_TIMES_DEN is '(同期值)上一年基盘留存进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LY_LY_RETAIN_PRICE is '(同期值)上一年基盘留存客单价'/
+comment on column TF_BASE_CSTMR_RPT.LY_LY_RETAIN_PRICE_MOL is '(同期值)上一年基盘留存客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_OY_RETAIN_BASE_CSTMR is '(同期值)他年留存基盘（基盘转化率分子)'/
+comment on column TF_BASE_CSTMR_RPT.LY_OY_RETAIN_BASE_CSTMR_DEN is '(同期值)他年留存基盘分母（基盘转化率分母)'/
+comment on column TF_BASE_CSTMR_RPT.LY_OY_RETAIN_IN_TIMES is '(同期值)他年留存基盘车进站频次'/
+comment on column TF_BASE_CSTMR_RPT.LY_OY_RETAIN_IN_TIMES_MOL is '(同期值)他年留存基盘车进站频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_OY_RETAIN_IN_TIMES_DEN is '(同期值)他年留存基盘车进站频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LY_OY_RETAIN_PRICE is '(同期值)他年留存基盘车客单价'/
+comment on column TF_BASE_CSTMR_RPT.LY_OY_RETAIN_PRICE_MOL is '(同期值)他年留存基盘车客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_CAR_OT_ASC_BASE_ALL_CSTMR is '(同期值)外店基盘流入'/
+comment on column TF_BASE_CSTMR_RPT.LY_CAR_OT_ASC_ALL_IN_TIMES is '(同期值)外店基盘流入频次'/
+comment on column TF_BASE_CSTMR_RPT.LY_CAR_OT_ASC_ALL_IN_TIMES_MOL is '(同期值)外店基盘流入频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_CAR_OT_ASC_ALL_IN_TIMES_DEN is '(同期值)外店基盘流入频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LY_CAR_OT_ASC_ALL_PRICE is '(同期值)外店基盘流入客单价'/
+comment on column TF_BASE_CSTMR_RPT.LY_CAR_OT_ASC_ALL_PRICE_MOL is '(同期值)外店基盘流入客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_TRU_BASE_CSTMR is '(同期值)托管基盘流入'/
+comment on column TF_BASE_CSTMR_RPT.LY_TRU_BASE_IN_TIMES is '(同期值)托管基盘流入频次'/
+comment on column TF_BASE_CSTMR_RPT.LY_TRU_BASE_IN_TIMES_MOL is '(同期值)托管基盘流入频次-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_TRU_BASE_IN_TIMES_DEN is '(同期值)托管基盘流入频次-分母'/
+comment on column TF_BASE_CSTMR_RPT.LY_TRU_BASE_PRICE is '(同期值)托管基盘流入客单价'/
+comment on column TF_BASE_CSTMR_RPT.LY_TRU_BASE_PRICE_MOL is '(同期值)托管基盘流入客单价-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_BASE_CSTMR_ONE_YEAR_NUM is '(同期值)一年忠诚率分子(一年基盘分子)'/
+comment on column TF_BASE_CSTMR_RPT.LY_BRAND_LOYALTY_NUM is '(同期值)品牌忠诚率分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_BRAND_LOYALTY_DEN is '(同期值)品牌忠诚率分母'/
+comment on column TF_BASE_CSTMR_RPT.LY_NEW_CAR_ADD_BASE_NUM is '(同期值)新车新增基盘-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_NEW_CAR_ADD_BASE_DEN is '(同期值)新车新增基盘-分母'/
+comment on column TF_BASE_CSTMR_RPT.LY_OWN_ASC_BASE_NUM is '(同期值)本店原有基盘-分子'/
+comment on column TF_BASE_CSTMR_RPT.LY_OWN_ASC_BASE_DEN is '(同期值)本店原有基盘-分母'/
+comment on column TF_BASE_CSTMR_RPT.LY_BASE_CSTMR_FIVE_YEAR_NUM is '(同期值)客户流失率(五年基盘分子)'/
+comment on column TF_BASE_CSTMR_RPT.FIRST_LOAD_DATE is '数据第一次加载日期'/
+comment on column TF_BASE_CSTMR_RPT.LAST_LOAD_DATE is '数据最后一次加载日期'/
+comment on column TF_BASE_CSTMR_RPT.LOAD_FROM is '数据来源'/
+
+
+-- 维持率总览表
+create table tf_cstmr_retention_rpt
+(
+PERIOD_TP VARCHAR2(1) default NULL,
+PERIOD_CD VARCHAR2(20) default NULL,
+ORG_TP VARCHAR2(20) default NULL,
+ORG_ID NUMBER(10) default NULL,
+VEH_AGE_ID NUMBER(10) default NULL,
+MODEL_ID NUMBER(10) default NULL,
+MODEL_LVL_1_CD VARCHAR2(100) default NULL,
+MODEL_LVL_2_CD VARCHAR2(100) default NULL,
+FIRST_MA_NUM_12 NUMBER(16) default NULL,
+FIRST_MA_DEN_12 NUMBER(16) default NULL,
+FIRST_MA_PAY_NUM_12 NUMBER(16) default NULL,
+FIRST_MA_PAY_DEN_12 NUMBER(16) default NULL,
+FIRST_MA_NUM_7 NUMBER(16) default NULL,
+FIRST_MA_DEN_7 NUMBER(16) default NULL,
+FIRST_MA_PAY_NUM_7 NUMBER(16) default NULL,
+FIRST_MA_PAY_DEN_7 NUMBER(16) default NULL,
+CSTMR_RETENTION_NUM_50 NUMBER(16) default NULL,
+CSTMR_RETENTION_DEN_50 NUMBER(16) default NULL,
+CSTMR_RETENTION_NUM_0 NUMBER(16) default NULL,
+CSTMR_RETENTION_DEN_0 NUMBER(16) default NULL,
+LP_FIRST_MA_NUM_12 NUMBER(16) default NULL,
+LP_FIRST_MA_DEN_12 NUMBER(16) default NULL,
+LP_FIRST_MA_PAY_NUM_12 NUMBER(16) default NULL,
+LP_FIRST_MA_PAY_DEN_12 NUMBER(16) default NULL,
+LP_FIRST_MA_NUM_7 NUMBER(16) default NULL,
+LP_FIRST_MA_DEN_7 NUMBER(16) default NULL,
+LP_FIRST_MA_PAY_NUM_7 NUMBER(16) default NULL,
+LP_FIRST_MA_PAY_DEN_7 NUMBER(16) default NULL,
+LP_CSTMR_RETENTION_NUM_50 NUMBER(16) default NULL,
+LP_CSTMR_RETENTION_DEN_50 NUMBER(16) default NULL,
+LP_CSTMR_RETENTION_NUM_0 NUMBER(16) default NULL,
+LP_CSTMR_RETENTION_DEN_0 NUMBER(16) default NULL,
+LY_FIRST_MA_NUM_12 NUMBER(16) default NULL,
+LY_FIRST_MA_DEN_12 NUMBER(16) default NULL,
+LY_FIRST_MA_PAY_NUM_12 NUMBER(16) default NULL,
+LY_FIRST_MA_PAY_DEN_12 NUMBER(16) default NULL,
+LY_FIRST_MA_NUM_7 NUMBER(16) default NULL,
+LY_FIRST_MA_DEN_7 NUMBER(16) default NULL,
+LY_FIRST_MA_PAY_NUM_7 NUMBER(16) default NULL,
+LY_FIRST_MA_PAY_DEN_7 NUMBER(16) default NULL,
+LY_CSTMR_RETENTION_NUM_50 NUMBER(16) default NULL,
+LY_CSTMR_RETENTION_DEN_50 NUMBER(16) default NULL,
+LY_CSTMR_RETENTION_NUM_0 NUMBER(16) default NULL,
+LY_CSTMR_RETENTION_DEN_0 NUMBER(16) default NULL,
+FIRST_LOAD_DATE VARCHAR2(100) default NULL,
+LAST_LOAD_DATE VARCHAR2(100) default NULL,
+LOAD_FROM VARCHAR2(10) default NULL
+);
+
+comment on column tf_cstmr_retention_rpt.PERIOD_TP is'时间类型: D(日);W(周);M(月);Q(季);H(半年);Y(年);'/
+comment on column tf_cstmr_retention_rpt.PERIOD_CD is'统计周期: yyyymmdd(日); yyyymm(月); yyyyQx(季度); yyyyHx(半年); yyyy(年);'/
+comment on column tf_cstmr_retention_rpt.ORG_TP is'ASC(维修站); FMC(小区); REGION(大区); CITY(城市); PROVINCE(省份); COUNTRY(全国)；ASCGROUP(经销商集团);'/
+comment on column tf_cstmr_retention_rpt.ORG_ID is'存放ASC_ID/FMC_ID/REGION_ID/CITY_ID/PROV_ID/....'/
+comment on column tf_cstmr_retention_rpt.VEH_AGE_ID is'车龄'/
+comment on column tf_cstmr_retention_rpt.MODEL_ID is'车型ID'/
+comment on column tf_cstmr_retention_rpt.MODEL_LVL_1_CD is''/
+comment on column tf_cstmr_retention_rpt.MODEL_LVL_2_CD is''/
+comment on column tf_cstmr_retention_rpt.FIRST_MA_NUM_12 is'首保进站率分子_12个月周期'/
+comment on column tf_cstmr_retention_rpt.FIRST_MA_DEN_12 is'首保进站率分母_12个月周期'/
+comment on column tf_cstmr_retention_rpt.FIRST_MA_PAY_NUM_12 is'首次付费保养进站率分子_12个月周期'/
+comment on column tf_cstmr_retention_rpt.FIRST_MA_PAY_DEN_12 is'首次付费保养进站率分母_12个月周期'/
+comment on column tf_cstmr_retention_rpt.FIRST_MA_NUM_7 is'首保进站率分子_7个月周期'/
+comment on column tf_cstmr_retention_rpt.FIRST_MA_DEN_7 is'首保进站率分母_7个月周期'/
+comment on column tf_cstmr_retention_rpt.FIRST_MA_PAY_NUM_7 is'首次付费保养进站率分子_7个月周期'/
+comment on column tf_cstmr_retention_rpt.FIRST_MA_PAY_DEN_7 is'首次付费保养进站率分母_7个月周期'/
+comment on column tf_cstmr_retention_rpt.CSTMR_RETENTION_NUM_50 is'原有基盘维持率分子_大于50元消费'/
+comment on column tf_cstmr_retention_rpt.CSTMR_RETENTION_DEN_50 is'原有基盘维持率分母_大于50元消费'/
+comment on column tf_cstmr_retention_rpt.CSTMR_RETENTION_NUM_0 is'原有基盘维持率分子_无消费要求'/
+comment on column tf_cstmr_retention_rpt.CSTMR_RETENTION_DEN_0 is'原有基盘维持率分母_无消费要求'/
+comment on column tf_cstmr_retention_rpt.LP_FIRST_MA_NUM_12 is'(上期值)首保进站率分子_12个月周期'/
+comment on column tf_cstmr_retention_rpt.LP_FIRST_MA_DEN_12 is'(上期值)首保进站率分母_12个月周期'/
+comment on column tf_cstmr_retention_rpt.LP_FIRST_MA_PAY_NUM_12 is'(上期值)首次付费保养进站率分子_12个月周期'/
+comment on column tf_cstmr_retention_rpt.LP_FIRST_MA_PAY_DEN_12 is'(上期值)首次付费保养进站率分母_12个月周期'/
+comment on column tf_cstmr_retention_rpt.LP_FIRST_MA_NUM_7 is'(上期值)首保进站率分子_7个月周期'/
+comment on column tf_cstmr_retention_rpt.LP_FIRST_MA_DEN_7 is'(上期值)首保进站率分母_7个月周期'/
+comment on column tf_cstmr_retention_rpt.LP_FIRST_MA_PAY_NUM_7 is'(上期值)首次付费保养进站率分子_7个月周期'/
+comment on column tf_cstmr_retention_rpt.LP_FIRST_MA_PAY_DEN_7 is'(上期值)首次付费保养进站率分母_7个月周期'/
+comment on column tf_cstmr_retention_rpt.LP_CSTMR_RETENTION_NUM_50 is'(上期值)原有基盘维持率分子_大于50元消费'/
+comment on column tf_cstmr_retention_rpt.LP_CSTMR_RETENTION_DEN_50 is'(上期值)原有基盘维持率分母_大于50元消费'/
+comment on column tf_cstmr_retention_rpt.LP_CSTMR_RETENTION_NUM_0 is'(上期值)原有基盘维持率分子_无消费要求'/
+comment on column tf_cstmr_retention_rpt.LP_CSTMR_RETENTION_DEN_0 is'(上期值)原有基盘维持率分母_无消费要求'/
+comment on column tf_cstmr_retention_rpt.LY_FIRST_MA_NUM_12 is'(同期值)首保进站率分子_12个月周期'/
+comment on column tf_cstmr_retention_rpt.LY_FIRST_MA_DEN_12 is'(同期值)首保进站率分母_12个月周期'/
+comment on column tf_cstmr_retention_rpt.LY_FIRST_MA_PAY_NUM_12 is'(同期值)首次付费保养进站率分子_12个月周期'/
+comment on column tf_cstmr_retention_rpt.LY_FIRST_MA_PAY_DEN_12 is'(同期值)首次付费保养进站率分母_12个月周期'/
+comment on column tf_cstmr_retention_rpt.LY_FIRST_MA_NUM_7 is'(同期值)首保进站率分子_7个月周期'/
+comment on column tf_cstmr_retention_rpt.LY_FIRST_MA_DEN_7 is'(同期值)首保进站率分母_7个月周期'/
+comment on column tf_cstmr_retention_rpt.LY_FIRST_MA_PAY_NUM_7 is'(同期值)首次付费保养进站率分子_7个月周期'/
+comment on column tf_cstmr_retention_rpt.LY_FIRST_MA_PAY_DEN_7 is'(同期值)首次付费保养进站率分母_7个月周期'/
+comment on column tf_cstmr_retention_rpt.LY_CSTMR_RETENTION_NUM_50 is'(同期值)原有基盘维持率分子_大于50元消费'/
+comment on column tf_cstmr_retention_rpt.LY_CSTMR_RETENTION_DEN_50 is'(同期值)原有基盘维持率分母_大于50元消费'/
+comment on column tf_cstmr_retention_rpt.LY_CSTMR_RETENTION_NUM_0 is'(同期值)原有基盘维持率分子_无消费要求'/
+comment on column tf_cstmr_retention_rpt.LY_CSTMR_RETENTION_DEN_0 is'(同期值)原有基盘维持率分母_无消费要求'/
+comment on column tf_cstmr_retention_rpt.FIRST_LOAD_DATE is'数据第一次加载日期'/
+comment on column tf_cstmr_retention_rpt.LAST_LOAD_DATE is'数据最后一次加载日期'/
+comment on column tf_cstmr_retention_rpt.LOAD_FROM is'数据来源'/
+
+
+-- 维持率总览表
+create table td_date
+(
+DATE_ID NUMBER(10) default NULL,
+CALENDAR_DATE VARCHAR2(100) default NULL,
+CALENDAR_WEEK CHAR(7) default NULL,
+CALENDAR_MONTH NUMBER(10) default NULL,
+CALENDAR_QUARTER CHAR(6) default NULL,
+CALENDAR_YEAR NUMBER(10) default NULL,
+WEEKDAY_NM CHAR(10) default NULL,
+MONTH_NM CHAR(10) default NULL,
+QUARTER_NM CHAR(10) default NULL,
+HALF_YEAR CHAR(1) default NULL,
+YEAR_DAY_NUM NUMBER(10) default NULL,
+QUARTER_DAY_NUM NUMBER(10) default NULL,
+MONTH_DAY_NUM NUMBER(10) default NULL,
+WEEK_DAY_NUM NUMBER(10) default NULL,
+WEEKEND_FLG CHAR(1) default NULL,
+HOLIDAY_FLG CHAR(1) default NULL,
+MONTH_END_DAY_FLG CHAR(1) default NULL,
+WEEK_END_DAY_FLG CHAR(1) default NULL,
+FISCAL_WEEK CHAR(7) default NULL,
+FISCAL_MONTH CHAR(6) default NULL,
+FISCAL_QUARTER CHAR(6) default NULL,
+FISCAL_HALF_YEAR CHAR(1) default NULL,
+FISCAL_YEAR CHAR(4) default NULL,
+EFF_DT VARCHAR2(100) default NULL,
+END_DT VARCHAR2(100) default NULL,
+CREATE_TMSTP VARCHAR2(100) default NULL,
+UPDATE_TMSTP VARCHAR2(100) default NULL,
+CREATE_BY VARCHAR2(20) default NULL,
+UPDATE_BY VARCHAR2(20) default NULL,
+VALID NUMBER(1) default NULL,
+DATA_OWNER CHAR(10) default NULL,
+NEWS_WEEK NUMBER(5) default NULL,
+NEWS_MONTH NUMBER(10) default NULL,
+NEWS_MONTH_NAME VARCHAR2(17) default NULL,
+ORDER_DAY NUMBER(6,2) default NULL,
+DD_HOLIDAY_FLG CHAR(1) default NULL,
+BLNG_DAY_FLG CHAR(1) default NULL
+);
+
+comment on column td_date.DATE_ID is'日期ID,eg. 20061009'/
+comment on column td_date.CALENDAR_DATE is'日历日期'/
+comment on column td_date.CALENDAR_WEEK is'日历周：eg 2006w01, 2006w52'/
+comment on column td_date.CALENDAR_MONTH is'日历月：eg 200610'/
+comment on column td_date.CALENDAR_QUARTER is'日历季度：eg, 2006Q3, 2007Q1'/
+comment on column td_date.CALENDAR_YEAR is'日历年：eg, 2006'/
+comment on column td_date.WEEKDAY_NM is'周日名称：eg Monday, Sunday'/
+comment on column td_date.MONTH_NM is'月份名称：eg. October'/
+comment on column td_date.QUARTER_NM is'季度名称：eg,Spring, Summer, Autumn, Winter'/
+comment on column td_date.HALF_YEAR is'1: first half,2: 2nd half'/
+comment on column td_date.YEAR_DAY_NUM is'the serial number of the year, such as 20060101 is the 1st day of the year, 20061231 is the 365 day of the year.'/
+comment on column td_date.QUARTER_DAY_NUM is'the serial number of the quarter, such as 20061001 is the 1st day of Q4, 20061101 is the 32 day of the quarter.'/
+comment on column td_date.MONTH_DAY_NUM is'the serial number of the month, such as 20061001 is the 1st day of October, 20061031 is the 31 day of October.'/
+comment on column td_date.WEEK_DAY_NUM is'the serial number of the week, such as 20061001 is the 7 th day of week, 20061031 is the 2nd day of week.'/
+comment on column td_date.WEEKEND_FLG is'y: weekend,n: not weekend'/
+comment on column td_date.HOLIDAY_FLG is'y: holiday,n: not holiday'/
+comment on column td_date.MONTH_END_DAY_FLG is'y: month last day, such as 20061031 is the end day of October,n: not month end day'/
+comment on column td_date.WEEK_END_DAY_FLG is'y:  last day of the week, such as 20061031 is the end day of its week,n: not week end day'/
+comment on column td_date.FISCAL_WEEK is'财务周'/
+comment on column td_date.FISCAL_MONTH is'财务月'/
+comment on column td_date.FISCAL_QUARTER is'财务季度'/
+comment on column td_date.FISCAL_HALF_YEAR is'财务半年'/
+comment on column td_date.FISCAL_YEAR is'财务年'/
+comment on column td_date.EFF_DT is''/
+comment on column td_date.END_DT is''/
+comment on column td_date.CREATE_TMSTP is''/
+comment on column td_date.UPDATE_TMSTP is''/
+comment on column td_date.CREATE_BY is''/
+comment on column td_date.UPDATE_BY is''/
+comment on column td_date.VALID is''/
+comment on column td_date.DATA_OWNER is''/
+comment on column td_date.NEWS_WEEK is'NEWS审核周'/
+comment on column td_date.NEWS_MONTH is'NEWS审核月'/
+comment on column td_date.NEWS_MONTH_NAME is'NEWS审核月名称,包含news周.如200201(201-204)'/
+comment on column td_date.ORDER_DAY is'订单日(星期一0.45, 星期二/三/四/五 1, 星期六0.55, 星期天0)，逢节假日由市场部自行调整'/
+comment on column td_date.DD_HOLIDAY_FLG is''/
+comment on column td_date.BLNG_DAY_FLG is'开票日标记'/
+
