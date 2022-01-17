@@ -142,4 +142,226 @@
         ORDER BY
         ORG_ID ASC
     </select>
+    <select id="selectDDSBaseCustomerChartOverView" resultType="java.util.Map">
+        SELECT
+          b.calendar_month period_cd,
+          CASE
+            WHEN SUM (BASE_CSTMR_ONE_YEAR) IS NULL THEN
+              0
+            ELSE
+              SUM (BASE_CSTMR_ONE_YEAR)
+            END BASE_CSTMR_ONE_YEAR,
+--           一年基盘当前
+          CASE
+            WHEN SUM (ly_base_cstmr_one_year) IS NULL THEN
+              0
+            ELSE
+              SUM (ly_base_cstmr_one_year)
+            END LY_BASE_CSTMR_ONE_YEAR,
+          -- 一年基盘同期
+          SUM (BASE_CSTMR_FIVE_YEAR) BASE_CSTMR_FIVE_YEAR,
+          -- 五年基盘当前
+          SUM (ly_base_cstmr_five_year) LY_BASE_CSTMR_FIVE_YEAR,
+          -- 五年基盘同期
+          CASE
+            WHEN SUM (BASE_CSTMR_FIVE_YEAR) = 0 THEN
+              NULL
+            ELSE
+              ROUND (
+                    SUM (base_cstmr_five_year_num) / SUM (BASE_CSTMR_FIVE_YEAR),
+                    3
+                )
+            END WASTAGE_RATE,
+          --流失率当前
+          CASE
+            WHEN SUM (ly_base_cstmr_five_year) = 0 THEN
+              NULL
+            ELSE
+                ROUND (
+                      SUM (
+                          ly_base_cstmr_five_year_num
+                        ) / SUM (ly_base_cstmr_five_year),
+                      3
+                  ) * 100
+            END LY_WASTAGE_RATE,
+          --流失率同期
+          CASE
+            WHEN SUM (BASE_CSTMR_ONE_YEAR) = 0 THEN
+              NULL
+            ELSE
+              ROUND (
+                    SUM (base_cstmr_one_year_num) / SUM (BASE_CSTMR_ONE_YEAR),
+                    3
+                )
+            END LOYAL_RATE_ONE_YEAR,
+          --一年忠诚率当前
+          CASE
+            WHEN SUM (ly_base_cstmr_one_year) = 0 THEN
+              NULL
+            ELSE
+                ROUND (
+                      SUM (ly_base_cstmr_one_year_num) / SUM (ly_base_cstmr_one_year),
+                      3
+                  ) * 100
+            END LY_LOYAL_RATE_ONE_YEAR,
+          --一年忠诚率同期
+          CASE
+            WHEN SUM (brand_loyalty_den) = 0 THEN
+              NULL
+            ELSE
+              ROUND (
+                    SUM (brand_loyalty_num) / SUM (brand_loyalty_den),
+                    3
+                )
+            END BRAND_LOYAL_RATE,
+          --品牌忠诚率当前
+          CASE
+            WHEN SUM (ly_brand_loyalty_den) = 0 THEN
+              NULL
+            ELSE
+                ROUND (
+                      SUM (ly_brand_loyalty_num) / SUM (ly_brand_loyalty_den),
+                      3
+                  ) * 100
+            END LY_BRAND_LOYAL_RATE --品牌忠诚率同期
+        FROM
+          (
+            SELECT DISTINCT
+              calendar_month
+            FROM
+              td_date
+          ) b
+            LEFT JOIN TF_BASE_CSTMR_RPT A ON A .period_cd = b.calendar_month
+            AND A .period_tp = 'M'
+        GROUP BY
+          b.calendar_month
+        ORDER BY
+          b.calendar_month
+    </select>
+    <select id="selectDDSRetentionRateOverView" resultType="java.util.Map">
+        SELECT
+            CASE
+        WHEN SUM (cstmr_retention_den_50) = 0 THEN
+            NULL
+        ELSE
+            ROUND (
+                SUM (cstmr_retention_NUM_50) / SUM (cstmr_retention_den_50),
+                3
+            ) * 100
+        END cstmr_retention_num_50,
+         --客户维持度大于50元消费 当月
+        CASE
+        WHEN SUM (lp_cstmr_retention_den_50) = 0 THEN
+            NULL
+        ELSE
+            ROUND (
+                SUM (lp_cstmr_retention_num_50) / SUM (lp_cstmr_retention_den_50),
+                3
+            ) * 100
+        END ly_cstmr_retention_num_50,
+         --客户维持度大于50元消费 上月
+        CASE
+        WHEN SUM (cstmr_retention_den_0) = 0 THEN
+            NULL
+        ELSE
+            ROUND (
+                SUM (cstmr_retention_num_0) / SUM (cstmr_retention_den_0),
+                3
+            ) * 100
+        END cstmr_retention_num_0,
+         --无消费需求 当月
+        CASE
+        WHEN SUM (lp_cstmr_retention_den_0) = 0 THEN
+            NULL
+        ELSE
+            ROUND (
+                SUM (lp_cstmr_retention_num_0) / SUM (lp_cstmr_retention_den_0),
+                3
+            ) * 100
+        END ly_cstmr_retention_num_0,
+         --无消费需求 上月
+        CASE
+        WHEN SUM (first_ma_pay_den_7) = 0 THEN
+            NULL
+        ELSE
+            ROUND (
+                SUM (first_ma_pay_num_7) / SUM (first_ma_pay_den_7),
+                3
+            ) * 100
+        END first_ma_pay_num_7,
+         --首次付费保养进站率 7个月周期 当月
+        CASE
+        WHEN SUM (lp_first_ma_pay_den_7) = 0 THEN
+            NULL
+        ELSE
+            ROUND (
+                SUM (lp_first_ma_pay_num_7) / SUM (lp_first_ma_pay_den_7),
+                3
+            ) * 100
+        END ly_first_ma_pay_num_7,
+         ----首次付费保养进站率 7个月周期 上月
+        CASE
+        WHEN SUM (first_ma_pay_den_12) = 0 THEN
+            NULL
+        ELSE
+            ROUND (
+                SUM (first_ma_pay_num_12) / SUM (first_ma_pay_den_12),
+                3
+            ) * 100
+        END first_ma_pay_num_12,
+         --首次付费保养进站率 12个月周期 当月
+        CASE
+        WHEN SUM (lp_first_ma_pay_den_12) = 0 THEN
+            NULL
+        ELSE
+            ROUND (
+                SUM (lp_first_ma_pay_num_12) / SUM (lp_first_ma_pay_den_12),
+                3
+            ) * 100
+        END ly_first_ma_pay_num_12,
+         --首次付费保养进站率 12个月周期 上月
+        CASE
+        WHEN SUM (first_ma_den_7) = 0 THEN
+            NULL
+        ELSE
+            ROUND (
+                SUM (first_ma_num_7) / SUM (first_ma_den_7),
+                3
+            ) * 100
+        END first_ma_num_7,
+         --首保进站率 7个月周期 当月
+        CASE
+        WHEN SUM (lp_first_ma_den_7) = 0 THEN
+            NULL
+        ELSE
+            ROUND (
+                SUM (lp_first_ma_num_7) / SUM (lp_first_ma_den_7),
+                3
+            ) * 100
+        END ly_first_ma_num_7,
+         --首保进站率 7个月周期 上月
+        CASE
+        WHEN SUM (first_ma_den_12) = 0 THEN
+            NULL
+        ELSE
+            ROUND (
+                SUM (first_ma_num_12) / SUM (first_ma_den_12),
+                3
+            ) * 100
+        END first_ma_num_12,
+         --首保进站率 12个月周期 当月
+        CASE
+        WHEN SUM (lp_first_ma_den_12) = 0 THEN
+            NULL
+        ELSE
+            ROUND (
+                SUM (lp_first_ma_num_12) / SUM (lp_first_ma_den_12),
+                3
+            ) * 100
+        END ly_first_ma_num_12 --首保进站率 12个月周期 上月
+        FROM
+            tf_cstmr_retention_rpt A
+        WHERE
+            A .period_tp = 'M'
+    </select>
 </mapper>

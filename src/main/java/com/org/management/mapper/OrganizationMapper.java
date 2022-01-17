@@ -68,4 +68,18 @@ public interface OrganizationMapper {
      * @return
      */
     List<KpiRptVo> selectKpiRpt(@Param("query") KpiQuery query);
+
+    /**
+     * 基盘
+     *
+     * @return
+     */
+    List<Map<String, String>> selectDDSBaseCustomerChartOverView();
+
+    /**
+     * 客户维持
+     *
+     * @return
+     */
+    List<Map<String, String>> selectDDSRetentionRateOverView();
 }
