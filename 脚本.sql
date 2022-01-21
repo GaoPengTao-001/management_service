@@ -941,3 +941,232 @@ comment on column td_date.ORDER_DAY is'订单日(星期一0.45, 星期二/三/�
 comment on column td_date.DD_HOLIDAY_FLG is''/
 comment on column td_date.BLNG_DAY_FLG is'开票日标记'/
 
+create table tf_leads_follow_rpt
+(
+PERIOD_TP VARCHAR2(20) default NULL,
+PERIOD_CD VARCHAR2(20) default NULL,
+ORG_TP VARCHAR2(20) default NULL,
+ORG_ID NUMBER(10) default NULL,
+LEADS_TP VARCHAR2(200) default NULL,
+MODEL_ID NUMBER(10) default NULL,
+VEH_AGE_ID NUMBER(10) default NULL,
+LEADS_ALLOC_QTY NUMBER default NULL,
+LEADS_FOLLOW_QTY NUMBER default NULL,
+LEADS_APPT_QTY NUMBER default NULL,
+LEADS_ORDER_QTY NUMBER default NULL,
+INVIT_30D_RET_QTY NUMBER default NULL,
+INVIT_60D_RET_QTY NUMBER default NULL,
+LABOR_COST_AMT_30 NUMBER default NULL,
+MATL_COST_AMT_30 NUMBER default NULL,
+LABOR_COST_AMT_60 NUMBER default NULL,
+MATL_COST_AMT_60 NUMBER default NULL,
+LP_LEADS_ALLOC_QTY NUMBER default NULL,
+LP_LEADS_FOLLOW_QTY NUMBER default NULL,
+LP_LEADS_APPT_QTY NUMBER default NULL,
+LP_LEADS_ORDER_QTY NUMBER default NULL,
+LP_INVIT_30D_RET_QTY NUMBER default NULL,
+LP_INVIT_60D_RET_QTY NUMBER default NULL,
+LP_LABOR_COST_AMT_30 NUMBER default NULL,
+LP_MATL_COST_AMT_30 NUMBER default NULL,
+LP_LABOR_COST_AMT_60 NUMBER default NULL,
+LP_MATL_COST_AMT_60 NUMBER default NULL,
+LY_LEADS_ALLOC_QTY NUMBER default NULL,
+LY_LEADS_FOLLOW_QTY NUMBER default NULL,
+LY_LEADS_APPT_QTY NUMBER default NULL,
+LY_LEADS_ORDER_QTY NUMBER default NULL,
+LY_INVIT_30D_RET_QTY NUMBER default NULL,
+LY_INVIT_60D_RET_QTY NUMBER default NULL,
+LY_LABOR_COST_AMT_30 NUMBER default NULL,
+LY_MATL_COST_AMT_30 NUMBER default NULL,
+LY_LABOR_COST_AMT_60 NUMBER default NULL,
+LY_MATL_COST_AMT_60 NUMBER default NULL,
+FIRST_LOAD_DATE VARCHAR2(100) default NULL,
+LAST_LOAD_DATE VARCHAR2(100) default NULL,
+LOAD_FROM VARCHAR2(10) default NULL,
+INVIT_90D_RET_QTY NUMBER default NULL,
+INVIT_180D_RET_QTY NUMBER default NULL,
+INVIT_240D_RET_QTY NUMBER default NULL,
+LABOR_COST_AMT_90 NUMBER default NULL,
+MATL_COST_AMT_90 NUMBER default NULL,
+LABOR_COST_AMT_180 NUMBER default NULL,
+MATL_COST_AMT_180 NUMBER default NULL,
+LABOR_COST_AMT_240 NUMBER default NULL,
+MATL_COST_AMT_240 NUMBER default NULL,
+IF_30_BACK_BEN_QTY NUMBER default NULL,
+IF_60_BACK_BEN_QTY NUMBER default NULL,
+IF_90_BACK_BEN_QTY NUMBER default NULL,
+IF_180_BACK_BEN_QTY NUMBER default NULL,
+IF_240_BACK_BEN_QTY NUMBER default NULL,
+LABOR_COST_AMT_30_BEN NUMBER default NULL,
+MATL_COST_AMT_30_BEN NUMBER default NULL,
+LABOR_COST_AMT_60_BEN NUMBER default NULL,
+MATL_COST_AMT_60_BEN NUMBER default NULL,
+LABOR_COST_AMT_90_BEN NUMBER default NULL,
+MATL_COST_AMT_90_BEN NUMBER default NULL,
+LABOR_COST_AMT_180_BEN NUMBER default NULL,
+MATL_COST_AMT_180_BEN NUMBER default NULL,
+LABOR_COST_AMT_240_BEN NUMBER default NULL,
+MATL_COST_AMT_240_BEN NUMBER default NULL,
+LP_INVIT_90D_RET_QTY NUMBER default NULL,
+LP_INVIT_180D_RET_QTY NUMBER default NULL,
+LP_INVIT_240D_RET_QTY NUMBER default NULL,
+LP_LABOR_COST_AMT_90 NUMBER default NULL,
+LP_MATL_COST_AMT_90 NUMBER default NULL,
+LP_LABOR_COST_AMT_180 NUMBER default NULL,
+LP_MATL_COST_AMT_180 NUMBER default NULL,
+LP_LABOR_COST_AMT_240 NUMBER default NULL,
+LP_MATL_COST_AMT_240 NUMBER default NULL,
+LP_IF_30_BACK_BEN_QTY NUMBER default NULL,
+LP_IF_60_BACK_BEN_QTY NUMBER default NULL,
+LP_IF_90_BACK_BEN_QTY NUMBER default NULL,
+LP_IF_180_BACK_BEN_QTY NUMBER default NULL,
+LP_IF_240_BACK_BEN_QTY NUMBER default NULL,
+LP_LABOR_COST_AMT_30_BEN NUMBER default NULL,
+LP_MATL_COST_AMT_30_BEN NUMBER default NULL,
+LP_LABOR_COST_AMT_60_BEN NUMBER default NULL,
+LP_MATL_COST_AMT_60_BEN NUMBER default NULL,
+LP_LABOR_COST_AMT_90_BEN NUMBER default NULL,
+LP_MATL_COST_AMT_90_BEN NUMBER default NULL,
+LP_LABOR_COST_AMT_180_BEN NUMBER default NULL,
+LP_MATL_COST_AMT_180_BEN NUMBER default NULL,
+LP_LABOR_COST_AMT_240_BEN NUMBER default NULL,
+LP_MATL_COST_AMT_240_BEN NUMBER default NULL,
+LY_INVIT_90D_RET_QTY NUMBER default NULL,
+LY_INVIT_180D_RET_QTY NUMBER default NULL,
+LY_INVIT_240D_RET_QTY NUMBER default NULL,
+LY_LABOR_COST_AMT_90 NUMBER default NULL,
+LY_MATL_COST_AMT_90 NUMBER default NULL,
+LY_LABOR_COST_AMT_180 NUMBER default NULL,
+LY_MATL_COST_AMT_180 NUMBER default NULL,
+LY_LABOR_COST_AMT_240 NUMBER default NULL,
+LY_MATL_COST_AMT_240 NUMBER default NULL,
+LY_IF_30_BACK_BEN_QTY NUMBER default NULL,
+LY_IF_60_BACK_BEN_QTY NUMBER default NULL,
+LY_IF_90_BACK_BEN_QTY NUMBER default NULL,
+LY_IF_180_BACK_BEN_QTY NUMBER default NULL,
+LY_IF_240_BACK_BEN_QTY NUMBER default NULL,
+LY_LABOR_COST_AMT_30_BEN NUMBER default NULL,
+LY_MATL_COST_AMT_30_BEN NUMBER default NULL,
+LY_LABOR_COST_AMT_60_BEN NUMBER default NULL,
+LY_MATL_COST_AMT_60_BEN NUMBER default NULL,
+LY_LABOR_COST_AMT_90_BEN NUMBER default NULL,
+LY_MATL_COST_AMT_90_BEN NUMBER default NULL,
+LY_LABOR_COST_AMT_180_BEN NUMBER default NULL,
+LY_MATL_COST_AMT_180_BEN NUMBER default NULL,
+LY_LABOR_COST_AMT_240_BEN NUMBER default NULL,
+LY_MATL_COST_AMT_240_BEN NUMBER default NULL
+);
+
+comment on column tf_leads_follow_rpt.PERIOD_TP is'时间类型: D(日);W(周);M(月);Q(季);H(半年);Y(年);'/
+comment on column tf_leads_follow_rpt.PERIOD_CD is'统计周期: yyyymmdd(日); yyyymm(月); yyyyQx(季度); yyyyHx(半年); yyyy(年);'/
+comment on column tf_leads_follow_rpt.ORG_TP is'ASC(维修站); FMC(小区); REGION(大区); CITY(城市); PROVINCE(省份); COUNTRY(全国)；ASCGROUP(经销商集团);'/
+comment on column tf_leads_follow_rpt.ORG_ID is'存放ASC_ID/FMC_ID/REGION_ID/CITY_ID/PROV_ID/BRAND_ID....'/
+comment on column tf_leads_follow_rpt.LEADS_TP is'保养综合;流失挽回;非保养综合;营销活动;停业基盘....'/
+comment on column tf_leads_follow_rpt.MODEL_ID is'车型ID'/
+comment on column tf_leads_follow_rpt.VEH_AGE_ID is'车龄ID'/
+comment on column tf_leads_follow_rpt.LEADS_ALLOC_QTY is'Leads分配数量'/
+comment on column tf_leads_follow_rpt.LEADS_FOLLOW_QTY is'Leads跟进数量'/
+comment on column tf_leads_follow_rpt.LEADS_APPT_QTY is'Leads预约单生成数'/
+comment on column tf_leads_follow_rpt.LEADS_ORDER_QTY is'Leads预约单生成工单数'/
+comment on column tf_leads_follow_rpt.INVIT_30D_RET_QTY is'邀约30天回店数'/
+comment on column tf_leads_follow_rpt.INVIT_60D_RET_QTY is'邀约60天回店数'/
+comment on column tf_leads_follow_rpt.LABOR_COST_AMT_30 is'30天工时费'/
+comment on column tf_leads_follow_rpt.MATL_COST_AMT_30 is'30天材料费'/
+comment on column tf_leads_follow_rpt.LABOR_COST_AMT_60 is'60天工时费'/
+comment on column tf_leads_follow_rpt.MATL_COST_AMT_60 is'60天材料费'/
+comment on column tf_leads_follow_rpt.LP_LEADS_ALLOC_QTY is'上期Leads分配数量'/
+comment on column tf_leads_follow_rpt.LP_LEADS_FOLLOW_QTY is'上期Leads跟进数量'/
+comment on column tf_leads_follow_rpt.LP_LEADS_APPT_QTY is'上期Leads预约单生成数'/
+comment on column tf_leads_follow_rpt.LP_LEADS_ORDER_QTY is'上期Leads预约单生成工单数'/
+comment on column tf_leads_follow_rpt.LP_INVIT_30D_RET_QTY is'上期邀约30天回店数'/
+comment on column tf_leads_follow_rpt.LP_INVIT_60D_RET_QTY is'上期邀约60天回店数'/
+comment on column tf_leads_follow_rpt.LP_LABOR_COST_AMT_30 is'上期30天工时费'/
+comment on column tf_leads_follow_rpt.LP_MATL_COST_AMT_30 is'上期30天材料费'/
+comment on column tf_leads_follow_rpt.LP_LABOR_COST_AMT_60 is'上期60天工时费'/
+comment on column tf_leads_follow_rpt.LP_MATL_COST_AMT_60 is'上期60天材料费'/
+comment on column tf_leads_follow_rpt.LY_LEADS_ALLOC_QTY is'同期Leads分配数量'/
+comment on column tf_leads_follow_rpt.LY_LEADS_FOLLOW_QTY is'同期Leads跟进数量'/
+comment on column tf_leads_follow_rpt.LY_LEADS_APPT_QTY is'同期Leads预约单生成数'/
+comment on column tf_leads_follow_rpt.LY_LEADS_ORDER_QTY is'同期Leads预约单生成工单数'/
+comment on column tf_leads_follow_rpt.LY_INVIT_30D_RET_QTY is'同期邀约30天回店数'/
+comment on column tf_leads_follow_rpt.LY_INVIT_60D_RET_QTY is'同期邀约60天回店数'/
+comment on column tf_leads_follow_rpt.LY_LABOR_COST_AMT_30 is'同期30天工时费'/
+comment on column tf_leads_follow_rpt.LY_MATL_COST_AMT_30 is'同期30天材料费'/
+comment on column tf_leads_follow_rpt.LY_LABOR_COST_AMT_60 is'同期60天工时费'/
+comment on column tf_leads_follow_rpt.LY_MATL_COST_AMT_60 is'同期60天材料费'/
+comment on column tf_leads_follow_rpt.FIRST_LOAD_DATE is'数据第一次加载日期'/
+comment on column tf_leads_follow_rpt.LAST_LOAD_DATE is'数据最后一次加载日期'/
+comment on column tf_leads_follow_rpt.LOAD_FROM is'数据来源'/
+comment on column tf_leads_follow_rpt.INVIT_90D_RET_QTY is'邀约90天回店数(回体系)'/
+comment on column tf_leads_follow_rpt.INVIT_180D_RET_QTY is'邀约180天回店数(回体系)'/
+comment on column tf_leads_follow_rpt.INVIT_240D_RET_QTY is'邀约240天回店数(回体系)'/
+comment on column tf_leads_follow_rpt.LABOR_COST_AMT_90 is'90天工时费(回体系)'/
+comment on column tf_leads_follow_rpt.MATL_COST_AMT_90 is'90天材料费(回体系)'/
+comment on column tf_leads_follow_rpt.LABOR_COST_AMT_180 is'180天工时费(回体系)'/
+comment on column tf_leads_follow_rpt.MATL_COST_AMT_180 is'180天材料费(回体系)'/
+comment on column tf_leads_follow_rpt.LABOR_COST_AMT_240 is'240天工时费(回体系)'/
+comment on column tf_leads_follow_rpt.MATL_COST_AMT_240 is'240天材料费(回体系)'/
+comment on column tf_leads_follow_rpt.IF_30_BACK_BEN_QTY is'邀约30天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.IF_60_BACK_BEN_QTY is'邀约60天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.IF_90_BACK_BEN_QTY is'邀约90天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.IF_180_BACK_BEN_QTY is'邀约180天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.IF_240_BACK_BEN_QTY is'邀约240天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.LABOR_COST_AMT_30_BEN is'30天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.MATL_COST_AMT_30_BEN is'30天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LABOR_COST_AMT_60_BEN is'60天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.MATL_COST_AMT_60_BEN is'60天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LABOR_COST_AMT_90_BEN is'90天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.MATL_COST_AMT_90_BEN is'90天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LABOR_COST_AMT_180_BEN is'180天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.MATL_COST_AMT_180_BEN is'180天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LABOR_COST_AMT_240_BEN is'240天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.MATL_COST_AMT_240_BEN is'240天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LP_INVIT_90D_RET_QTY is'上期邀约90天回店数(回体系)'/
+comment on column tf_leads_follow_rpt.LP_INVIT_180D_RET_QTY is'上期邀约180天回店数(回体系)'/
+comment on column tf_leads_follow_rpt.LP_INVIT_240D_RET_QTY is'上期邀约240天回店数(回体系)'/
+comment on column tf_leads_follow_rpt.LP_LABOR_COST_AMT_90 is'上期90天工时费(回体系)'/
+comment on column tf_leads_follow_rpt.LP_MATL_COST_AMT_90 is'上期90天材料费(回体系)'/
+comment on column tf_leads_follow_rpt.LP_LABOR_COST_AMT_180 is'上期180天工时费(回体系)'/
+comment on column tf_leads_follow_rpt.LP_MATL_COST_AMT_180 is'上期180天材料费(回体系)'/
+comment on column tf_leads_follow_rpt.LP_LABOR_COST_AMT_240 is'上期240天工时费(回体系)'/
+comment on column tf_leads_follow_rpt.LP_MATL_COST_AMT_240 is'上期240天材料费(回体系)'/
+comment on column tf_leads_follow_rpt.LP_IF_30_BACK_BEN_QTY is'上期邀约30天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.LP_IF_60_BACK_BEN_QTY is'上期邀约60天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.LP_IF_90_BACK_BEN_QTY is'上期邀约90天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.LP_IF_180_BACK_BEN_QTY is'上期邀约180天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.LP_IF_240_BACK_BEN_QTY is'上期邀约240天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.LP_LABOR_COST_AMT_30_BEN is'上期30天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.LP_MATL_COST_AMT_30_BEN is'上期30天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LP_LABOR_COST_AMT_60_BEN is'上期60天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.LP_MATL_COST_AMT_60_BEN is'上期60天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LP_LABOR_COST_AMT_90_BEN is'上期90天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.LP_MATL_COST_AMT_90_BEN is'上期90天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LP_LABOR_COST_AMT_180_BEN is'上期180天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.LP_MATL_COST_AMT_180_BEN is'上期180天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LP_LABOR_COST_AMT_240_BEN is'上期240天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.LP_MATL_COST_AMT_240_BEN is'上期240天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LY_INVIT_90D_RET_QTY is'同期邀约90天回店数(回体系)'/
+comment on column tf_leads_follow_rpt.LY_INVIT_180D_RET_QTY is'同期邀约180天回店数(回体系)'/
+comment on column tf_leads_follow_rpt.LY_INVIT_240D_RET_QTY is'同期邀约240天回店数(回体系)'/
+comment on column tf_leads_follow_rpt.LY_LABOR_COST_AMT_90 is'同期90天工时费(回体系)'/
+comment on column tf_leads_follow_rpt.LY_MATL_COST_AMT_90 is'同期90天材料费(回体系)'/
+comment on column tf_leads_follow_rpt.LY_LABOR_COST_AMT_180 is'同期180天工时费(回体系)'/
+comment on column tf_leads_follow_rpt.LY_MATL_COST_AMT_180 is'同期180天材料费(回体系)'/
+comment on column tf_leads_follow_rpt.LY_LABOR_COST_AMT_240 is'同期240天工时费(回体系)'/
+comment on column tf_leads_follow_rpt.LY_MATL_COST_AMT_240 is'同期240天材料费(回体系)'/
+comment on column tf_leads_follow_rpt.LY_IF_30_BACK_BEN_QTY is'同期邀约30天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.LY_IF_60_BACK_BEN_QTY is'同期邀约60天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.LY_IF_90_BACK_BEN_QTY is'同期邀约90天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.LY_IF_180_BACK_BEN_QTY is'同期邀约180天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.LY_IF_240_BACK_BEN_QTY is'同期邀约240天回店数(回本站)'/
+comment on column tf_leads_follow_rpt.LY_LABOR_COST_AMT_30_BEN is'同期30天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.LY_MATL_COST_AMT_30_BEN is'同期30天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LY_LABOR_COST_AMT_60_BEN is'同期60天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.LY_MATL_COST_AMT_60_BEN is'同期60天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LY_LABOR_COST_AMT_90_BEN is'同期90天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.LY_MATL_COST_AMT_90_BEN is'同期90天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LY_LABOR_COST_AMT_180_BEN is'同期180天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.LY_MATL_COST_AMT_180_BEN is'同期180天材料费(回本站)'/
+comment on column tf_leads_follow_rpt.LY_LABOR_COST_AMT_240_BEN is'同期240天工时费(回本站)'/
+comment on column tf_leads_follow_rpt.LY_MATL_COST_AMT_240_BEN is'同期240天材料费(回本站)'/
+
