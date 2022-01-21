@@ -26,7 +26,7 @@ public class Organization {
         return organizationService.getRegion(query);
     }
 
-    @PostMapping(value = "/getOutputValue")
+    @PostMapping(value = "/getOutputValue1")
     public KpiRptDetail getOutputValue(@RequestBody KpiQuery query) {
         return organizationService.getOutputValue(query);
     }
