@@ -364,4 +364,33 @@
         WHERE
             A .period_tp = 'M'
     </select>
+    <select id="selectLeads" resultType="java.util.Map">
+        select
+          a.period_cd,
+          a.leads_tp,  --leads类型
+          sum(a.leads_alloc_qty),--下发数量
+          sum(a.leads_follow_qty), --跟进数量
+          sum(a.invit_30d_ret_qty ),--30天回站数   回体系
+          sum(a.invit_30d_ret_qty)/sum(a.leads_alloc_qty), --30天回站率   回体系
+          round(decode(nvl(sum(a.leads_alloc_qty),0),0,0,sum(a.invit_30d_ret_qty)/sum(a.leads_alloc_qty)),3)*100 invit_60d_ret_ratio,
+          sum(a.if_30_back_ben_qty),  --30天回站数  回本站
+          sum(a.if_30_back_ben_qty)/sum(a.leads_alloc_qty),  --30天回站率  回本站
+          round(decode(nvl(sum(a.leads_alloc_qty),0),0,0,sum(a.if_30_back_ben_qty)/sum(a.leads_alloc_qty)),3)*100 invit_60d_ret_ratio,
+          sum(a.invit_60d_ret_qty), --60天回站数   回体系
+          sum(a.invit_60d_ret_qty)/sum(a.leads_alloc_qty), --60天回站率   回体系
+          round(decode(nvl(sum(a.leads_alloc_qty),0),0,0,sum(a.invit_60d_ret_qty)/sum(a.leads_alloc_qty)),3)*100 invit_60d_ret_ratio,
+          sum(a.if_60_back_ben_qty),  --60天回站数  回本站
+          sum(a.if_60_back_ben_qty)/sum(a.leads_alloc_qty) , --60天回站率  回本站
+          round(decode(nvl(sum(a.leads_alloc_qty),0),0,0,sum(a.if_60_back_ben_qty)/sum(a.leads_alloc_qty)),3)*100 invit_60d_ret_ratio
+        from tf_leads_follow_rpt a
+        WHERE
+            a.period_tp='M'
+        <if test="null != query.periodCd and '' != query.periodCd">
+            AND a.period_cd = #{query.periodCd}
+        </if>
+        <if test="null != query.leadsType and '' != query.leadsType">
+            AND a.leads_tp = #{query.leadsType}
+        </if>
+        GROUP BY a.PERIOD_CD,a.leads_tp 
+    </select>
 </mapper>
