@@ -28,6 +28,16 @@ public class KpiQuery {
      */
     private List<String> orgIds;
 
+    /**
+     * 维修类型
+     */
+    private String repairType;
+
+    /**
+     * 维修类型对应的kpiCd
+     */
+    private String kpiCd;
+
 
     public String getPeriodTp() {
         return periodTp;
@@ -67,5 +77,21 @@ public class KpiQuery {
 
     public void setOrgIds(List<String> orgIds) {
         this.orgIds = orgIds;
+    }
+
+    public String getKpiCd() {
+        return kpiCd;
+    }
+
+    public void setKpiCd(String kpiCd) {
+        this.kpiCd = kpiCd;
+    }
+
+    public String getRepairType() {
+        return repairType;
+    }
+
+    public void setRepairType(String repairType) {
+        this.repairType = repairType;
     }
 }

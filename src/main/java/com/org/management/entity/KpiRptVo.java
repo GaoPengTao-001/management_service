@@ -15,6 +15,8 @@ public class KpiRptVo {
     private String firstLoadDate;
     private String lastLoadDate;
     private String loadFrom;
+    private String lpKpiPerc;
+    private String lyKpiPerc;
 
     public String getKpiId() {
         return kpiId;
@@ -126,5 +128,21 @@ public class KpiRptVo {
 
     public void setOrgName(String orgName) {
         this.orgName = orgName;
+    }
+
+    public String getLpKpiPerc() {
+        return lpKpiPerc;
+    }
+
+    public void setLpKpiPerc(String lpKpiPerc) {
+        this.lpKpiPerc = lpKpiPerc;
+    }
+
+    public String getLyKpiPerc() {
+        return lyKpiPerc;
+    }
+
+    public void setLyKpiPerc(String lyKpiPerc) {
+        this.lyKpiPerc = lyKpiPerc;
     }
 }

@@ -5,6 +5,7 @@ import com.org.management.entity.KpiRptVo;
 import com.org.management.entity.Region;
 import com.org.management.entity.RegionQuery;
 import com.org.management.entity.KpiQuery;
+import com.org.management.enumeration.TotalValRepairType;
 import com.org.management.mapper.OrganizationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,6 +85,7 @@ public class OrganizationService {
 
     public KpiRptDetail getOutputValue(KpiQuery query) {
         try {
+            query.setKpiCd(TotalValRepairType.getKpiCd(query.getRepairType()));
             KpiRptDetail kpiRptDetail = new KpiRptDetail();
             // 查询当前orgId的kpi
             List<KpiRptVo> kpiRptVos = organizationMapper.selectKpiRpt(query);
@@ -93,6 +95,7 @@ public class OrganizationService {
 
             // 查询当前orgId下级的kpi
             KpiQuery downKpiQuery = new KpiQuery();
+            downKpiQuery.setKpiCd(query.getKpiCd());
             downKpiQuery.setPeriodTp(query.getPeriodTp());
             downKpiQuery.setPeriodCd(query.getPeriodCd());
             List<Map<String, String>> orgList;

@@ -109,11 +109,35 @@
     <select id="selectKpiRpt" resultType="com.org.management.entity.KpiRptVo">
         SELECT
         period_cd "periodCd",
-        #{query.orgTp} "orgTp",
+        'REGION' "orgTp",
         org_id "orgId",
-        COUNT (kpi_val) "kpiVal",
-        COUNT (lp_kpi_val) "lpKpiVal",
-        COUNT (ly_kpi_val) "lyKpiVal"
+        round(SUM (kpi_val)/ 10000) "kpiVal",
+        round(SUM (lp_kpi_val)/ 10000) "lpKpiVal",
+        round(SUM (ly_kpi_val)/ 10000) "lyKpiVal",
+        -- 同比：（当期-上期）/上期
+        CASE
+        WHEN SUM (lp_kpi_val) = 0 THEN
+        NULL
+        ELSE
+        ROUND (
+        (
+        SUM (kpi_val) - SUM (lp_kpi_val)
+        ) / SUM (lp_kpi_val),
+        3
+        ) * 100
+        END "lpKpiPerc",
+        -- 环比：（当期-同期）/同期
+        CASE
+        WHEN SUM (ly_kpi_val) = 0 THEN
+        NULL
+        ELSE
+        ROUND (
+        (
+        SUM (kpi_val) - SUM (ly_kpi_val)
+        ) / SUM (ly_kpi_val),
+        3
+        ) * 100
+        END "lyKpiPerc"
         FROM
         TF_KPI_RPT
         <where>
@@ -134,6 +158,9 @@
             </if>
             <if test="null != query.orgTp and '' != query.orgTp">
                 AND org_tp = #{query.orgTp}
+            </if>
+            <if test="null != query.kpiCd and '' != query.kpiCd">
+                AND kpi_id = (select KPI_ID from tc_kpi where KPI_CD = #{query.kpiCd})
             </if>
         </where>
         GROUP BY
@@ -368,8 +395,8 @@
         select
           a.period_cd,
           a.leads_tp,  --leads类型
-          sum(a.leads_alloc_qty),--下发数量
-          sum(a.leads_follow_qty), --跟进数量
+          sum(a.leads_alloc_qty),--下发数量=分配数量
+          sum(a.leads_follow_qty), --跟进数量，跟进率=跟进数/下发数量，1位小数
           sum(a.invit_30d_ret_qty ),--30天回站数   回体系
           sum(a.invit_30d_ret_qty)/sum(a.leads_alloc_qty), --30天回站率   回体系
           round(decode(nvl(sum(a.leads_alloc_qty),0),0,0,sum(a.invit_30d_ret_qty)/sum(a.leads_alloc_qty)),3)*100 invit_60d_ret_ratio,
