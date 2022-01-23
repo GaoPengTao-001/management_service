@@ -38,6 +38,11 @@ public class KpiQuery {
      */
     private String kpiCd;
 
+    /**
+     * 模块id，1：总产值，2：台次
+     */
+    private String mouldId;
+
 
     public String getPeriodTp() {
         return periodTp;
@@ -93,5 +98,13 @@ public class KpiQuery {
 
     public void setRepairType(String repairType) {
         this.repairType = repairType;
+    }
+
+    public String getMouldId() {
+        return mouldId;
+    }
+
+    public void setMouldId(String mouldId) {
+        this.mouldId = mouldId;
     }
 }

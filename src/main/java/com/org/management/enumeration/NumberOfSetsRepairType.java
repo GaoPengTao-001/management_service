@@ -3,30 +3,31 @@ package com.org.management.enumeration;
 /**
  * 总产值的维修类型
  */
-public enum TotalValRepairType {
+public enum NumberOfSetsRepairType {
 
-    TOTAIL("totail", "KPI_0101"),
-    CLAIM("claim", "KPI_0109"),
-    GUARANTEE("guarantee", "KPI_0110"),
-    NOGUARANTEE("noGuarantee", "KPI_0111"),
-    NOCLAIM("noClaim", "KPI_0103"),
-    MAINTAIN("maintain", "KPI_0104"),
-    REPAIR("repair", "KPI_0105"),
-    ACCIDENT("accident", "KPI_0106"),
-    SALE("sale", "KPI_0107"),
-    REWORK("rework", "KPI_0108");
+    // '总产值','索赔','首保','索赔不含首保','非索赔','保养','维修','事故','销售','返工'
+    TOTAIL("totail", "KPI_0201"),
+    CLAIM("claim", "KPI_0208"),
+    GUARANTEE("guarantee", "KPI_0203"),
+    NOGUARANTEE("noGuarantee", "KPI_0210"),
+    NOCLAIM("noClaim", "KPI_0202"),
+    MAINTAIN("maintain", ""),
+    REPAIR("repair", "KPI_0204"),
+    ACCIDENT("accident", "KPI_0205"),
+    SALE("sale", "KPI_0206"),
+    REWORK("rework", "KPI_0207");
 
     private String repairType;
     private String kpiCd;
 
 
-    private TotalValRepairType(String repairType, String kpiCd) {
+    private NumberOfSetsRepairType(String repairType, String kpiCd) {
         this.repairType = repairType;
         this.kpiCd = kpiCd;
     }
 
     public static String getKpiCd(String code) {
-        for (TotalValRepairType c : TotalValRepairType.values()) {
+        for (NumberOfSetsRepairType c : NumberOfSetsRepairType.values()) {
             if (c.getRepairType().equals(code) ) {
                 return c.getKpiCd();
             }
